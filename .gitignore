@@ -1,0 +1,15 @@
+# .gitignore
+
+/vendor/
+/writable/
+/.env
+*.log
+*.sql
+*.mp4
+*.zip
+*.tar
+.idea/
+*.bak
+*.swp
+.DS_Store
+node_modules/
