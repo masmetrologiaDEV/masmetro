@@ -63,12 +63,15 @@
                 </div>
 <!--  --> <!--  --> <!--  --><!--  --> <!--  --> <!--  --><!--  --> <!--  --> <!--  -->
 <!--  --> <!--  --> <!--  --><!--  --> <!--  --> <!--  --><!--  --> <!--  --> <!--  -->
-<div class="form-group">
-  <label for="sala">Sala:</label>
-  <select name="sala" id="sala" class="form-control" required>
-    <option value="1">Sala 1</option>
-    <option value="2">Sala 2</option>
-  </select>
+
+ <div class="form-group">
+  <label for="sala" class="col-sm-3 control-label">Sala:</label>
+  <div class="col-sm-9 input-group">
+    <select name="sala" id="sala" class="form-control" required>
+      <option value="1">Sala 1</option>
+      <option value="2">Sala 2</option>
+    </select>
+  </div>
 </div>
 
 <!--  --> <!--  --> <!--  --><!--  --> <!--  --> <!--  --><!--  --> <!--  --> <!--  -->
@@ -138,6 +141,9 @@
               <center style="font-size: 20px;">
                 <label style="font-size: 15px;" class="col-sm-12 control-label" id="modalViewDate"></label>
                 <label class="col-sm-12 control-label" id="modalViewUsuario">Usuario</label>
+<!-- vista de la sala ocupada -->
+                <label class="col-sm-12 control-label" id="modalViewSala">Sala</label>
+
                 <label class="col-sm-12 control-label" id="modalViewInicia">Inicia</label>
                 <label class="col-sm-12 control-label" id="modalViewTermina">Termina</label>
                 <label class="col-sm-12 control-label" id="modalViewNotes">Notas</label>
@@ -222,6 +228,9 @@
           $("#modalViewInicia").html("Inicia: " + evento.start.format("hh:mm A"));
           $("#modalViewTermina").html("Termina: " + evento.end.format("hh:mm A"));
           $("#modalViewDate").html("Creado: " + moment(evento.fecha).format('YYYY-MM-D h:mm:ss a'));
+// Vista de la sala ocupada
+          $("#modalViewSala").html("Sala: " + evento.sala);
+
           idEvento = evento.id;
           if(evento.usuario == "<?= $this->session->id ?>")
           {
@@ -292,6 +301,7 @@ $.ajax({
       var descripcion = $('#notas').val();
       var reunion = $('#cbreunion').val();
       var tags_1 = $('#tags_1').val();
+      var sala = $('#sala').val();
 
       var i = new Date(dia + " " + inicia);
       var t = new Date(dia + " " + termina);
@@ -306,7 +316,7 @@ $.ajax({
         $.ajax({
             type: "POST",
             url: '<?= base_url('agenda/crearEvento') ?>',
-            data: { 'titulo' : asunto, 'inicia' : inicia, 'termina' : termina, 'descripcion' : descripcion, 'reunion' : reunion, 'tags_1' : tags_1 },
+            data: { 'titulo' : asunto, 'inicia' : inicia, 'termina' : termina, 'descripcion' : descripcion, 'reunion' : reunion, 'tags_1' : tags_1, 'sala' : sala },
             success: function(result){
               cal.fullCalendar('renderEvent', {
                 id: result,

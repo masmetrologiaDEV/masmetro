@@ -59,7 +59,8 @@ die();*/
             'titulo' =>$_POST['titulo'] , 
             'inicia' => $_POST['inicia'], 
             'termina' => $_POST['termina'], 
-            
+            'sala' => $_POST['sala'], 
+
             'descripcion' => $_POST['descripcion'], 
             'equipo' => 1, 
             'correos' => $_POST['tags_1'], 
@@ -75,7 +76,6 @@ die();*/
             'descripcion' => $_POST['descripcion'].' -- Fecha/Hora: '.$_POST['inicia'].' hasta '.$_POST['termina'].' agregrar correos: '.$_POST['tags_1'],
             'estatus' => 'ABIERTO',
             'cierre' => '0',
-            'sala' => $sala
 
         );
         $last_id = $this->ITModelo->crear_ticket($data);
@@ -121,8 +121,7 @@ die();*/
         $termina=$this->input->post('termina');
         $sala=$this->input->post('sala');
 //cambiar la consulta
-        $query ="SELECT * FROM `agenda` WHERE inicia <= '".$termina."' AND termina >= '".$inicia."' and sala=".$sala;
-        echo $query;die();
+    
         $res = $this->Conexion->consultar("SELECT * FROM `agenda` WHERE inicia <= '".$termina."' AND termina >= '".$inicia."' and sala=".$sala);
 
       if($res)
