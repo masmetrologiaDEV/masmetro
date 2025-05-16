@@ -28,18 +28,18 @@ class Agenda extends CI_Controller {
     {
         $reunion = $_POST['reunion'];
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    $sala = $_POST['sala'];
+    /*$sala = $_POST['sala'];
     $inicia = $_POST['inicia'];
-    $termina = $_POST['termina'];
-
+    $termina = $_POST['termina'];*/
+/*
 echo '<pre>';
 print_r($_POST['sala']);
 print_r($_POST['inicia']);
 print_r($_POST['termina']);
 echo '</pre>';
-die();
+die();*/
 
-
+/*
     $query = "SELECT * FROM agenda WHERE sala = ? AND (
         (inicia < ? AND termina > ?) OR
         (inicia >= ? AND inicia < ?)
@@ -49,16 +49,17 @@ die();
     if (!empty($res)) {
         echo "<script>alert('La sala ya está ocupada en ese horario'); window.history.back();</script>";
         exit;
-    }
+    }*/
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+//agregar sala
            if ($reunion == 1) {
             $datos = array(
             'usuario' => $this->session->id, 
             'titulo' =>$_POST['titulo'] , 
             'inicia' => $_POST['inicia'], 
             'termina' => $_POST['termina'], 
+            
             'descripcion' => $_POST['descripcion'], 
             'equipo' => 1, 
             'correos' => $_POST['tags_1'], 
@@ -118,7 +119,12 @@ die();
     {
         $inicia=$this->input->post('inicia');
         $termina=$this->input->post('termina');
-        $res = $this->Conexion->consultar("SELECT * FROM `agenda` WHERE inicia <= '".$termina."' AND termina >= '".$inicia."'");
+        $sala=$this->input->post('sala');
+//cambiar la consulta
+        $query ="SELECT * FROM `agenda` WHERE inicia <= '".$termina."' AND termina >= '".$inicia."' and sala=".$sala;
+        echo $query;die();
+        $res = $this->Conexion->consultar("SELECT * FROM `agenda` WHERE inicia <= '".$termina."' AND termina >= '".$inicia."' and sala=".$sala);
+
       if($res)
       {
         echo json_encode($res);

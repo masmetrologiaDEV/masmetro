@@ -66,8 +66,8 @@
 <div class="form-group">
   <label for="sala">Sala:</label>
   <select name="sala" id="sala" class="form-control" required>
-    <option value="Sala 1">Sala 1</option>
-    <option value="Sala 2">Sala 2</option>
+    <option value="1">Sala 1</option>
+    <option value="2">Sala 2</option>
   </select>
 </div>
 
@@ -240,6 +240,8 @@
 function validar() {
       var inicia = $('#inicia').val();
       var termina = $('#termina').val();
+      //enviar sala
+      var sala =$('#sala').val();
       var i = new Date(dia + " " + inicia);
       var t = new Date(dia + " " + termina);
       inicia = i.getFullYear() + "-" + (i.getMonth() + 1) + "-" + paddy(i.getDate(),2) + " " + i.getHours() + ":" + paddy(i.getMinutes(),2);
@@ -266,7 +268,7 @@ function validar() {
 $.ajax({
             type: "POST",
             url: '<?= base_url('agenda/validacion') ?>',
-            data: { inicia : inicia, termina : termina},
+            data: { inicia : inicia, termina : termina, sala : sala},
             success: function(result){
               if (result) {
                 alert("Sala Ocupada");
@@ -283,6 +285,7 @@ $.ajax({
 }
 }
     function crearEvento(){
+      //agregar sala
      /*ESTO*/var asunto =$('#asunto').val();
       var inicia = $('#inicia').val();
       var termina = $('#termina').val();
