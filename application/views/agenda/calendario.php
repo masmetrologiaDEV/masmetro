@@ -61,8 +61,18 @@
                         <input id="asunto" type='text' class="form-control" />
                       </div>
                 </div>
+<!--  --> <!--  --> <!--  --><!--  --> <!--  --> <!--  --><!--  --> <!--  --> <!--  -->
+<!--  --> <!--  --> <!--  --><!--  --> <!--  --> <!--  --><!--  --> <!--  --> <!--  -->
+<div class="form-group">
+  <label for="sala">Sala:</label>
+  <select name="sala" id="sala" class="form-control" required>
+    <option value="Sala 1">Sala 1</option>
+    <option value="Sala 2">Sala 2</option>
+  </select>
+</div>
 
-
+<!--  --> <!--  --> <!--  --><!--  --> <!--  --> <!--  --><!--  --> <!--  --> <!--  -->
+<!--  --> <!--  --> <!--  --><!--  --> <!--  --> <!--  --><!--  --> <!--  --> <!--  -->               
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Inicia:</label>
                     <div class='col-sm-9 input-group date' id='timeInicia'>

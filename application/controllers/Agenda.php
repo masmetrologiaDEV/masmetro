@@ -27,6 +27,31 @@ class Agenda extends CI_Controller {
     function crearEvento()
     {
         $reunion = $_POST['reunion'];
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    $sala = $_POST['sala'];
+    $inicia = $_POST['inicia'];
+    $termina = $_POST['termina'];
+
+echo '<pre>';
+print_r($_POST['sala']);
+print_r($_POST['inicia']);
+print_r($_POST['termina']);
+echo '</pre>';
+die();
+
+
+    $query = "SELECT * FROM agenda WHERE sala = ? AND (
+        (inicia < ? AND termina > ?) OR
+        (inicia >= ? AND inicia < ?)
+    )";
+    $res = $this->db->query($query, [$sala, $termina, $inicia, $inicia, $termina])->result();
+
+    if (!empty($res)) {
+        echo "<script>alert('La sala ya está ocupada en ese horario'); window.history.back();</script>";
+        exit;
+    }
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
            if ($reunion == 1) {
             $datos = array(
@@ -38,6 +63,8 @@ class Agenda extends CI_Controller {
             'equipo' => 1, 
             'correos' => $_POST['tags_1'], 
         );
+
+
         echo $this->Modelo->insertEvent($datos);
 
             $data = array(
@@ -47,6 +74,8 @@ class Agenda extends CI_Controller {
             'descripcion' => $_POST['descripcion'].' -- Fecha/Hora: '.$_POST['inicia'].' hasta '.$_POST['termina'].' agregrar correos: '.$_POST['tags_1'],
             'estatus' => 'ABIERTO',
             'cierre' => '0',
+            'sala' => $sala
+
         );
         $last_id = $this->ITModelo->crear_ticket($data);
 
@@ -70,6 +99,8 @@ class Agenda extends CI_Controller {
         );
         echo $this->Modelo->insertEvent($datos);
         }
+
+
     }
 
     function borrarEvento()
