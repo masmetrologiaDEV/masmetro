@@ -286,10 +286,33 @@
                      var BTN_CLASS =null;
 //COMPLETAR switch
                      switch(elem.estatus){
-                        case  'ABIERTO':
+                        case 'ABIERTO':
                               BTN_CLASS = 'btn btn-primary';
                               break;
-
+                           
+                        case 'EN REVISION':
+                               BTN_CLASS = 'btn btn-warning';
+                               break;
+                              
+                        case 'EN CURSO':
+                              BTN_CLASS = 'btn btn-info';
+                              break;
+                              
+                        case 'DETENIDO':
+                              BTN_CLASS = 'btn btn-warning';
+                              break;
+                              
+                        case 'CANCELADO':
+                              BTN_CLASS = 'btn btn-default';
+                              break;
+                              
+                        case 'SOLUCIONADO':
+                              BTN_CLASS = 'btn btn-success';
+                              break;
+                              
+                        case 'CERRADO':
+                              BTN_CLASS = 'btn btn-dark';
+                              break;      
                      }
 
                      var ren = tab.insertRow(tab.rows.length);
