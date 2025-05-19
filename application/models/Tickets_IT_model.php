@@ -48,6 +48,12 @@ class Tickets_IT_model extends CI_Model {
             $this->db->where('TS.usuario', $user);
         }
 
+        if (!empty($f1) && !empty($f2)) {
+        $this->db->where('TS.fecha >=', $f1);
+        $this->db->where('TS.fecha <=', $f2);
+        }
+        
+
         $this->db->order_by('TS.fecha', 'DESC');
         $query = $this->db->get();
         if ($query->num_rows() > 0) {

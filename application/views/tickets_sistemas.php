@@ -271,16 +271,23 @@
       var fecha2 =$('#fecha2').val();
       var URL = base_url + "tickets_IT/buscar_tickets";
       $('#tabla_tickets tbody tr').remove();
+
       $.ajax({
          type : 'POST',
          url : URL,
          data : {estatus : estatus, user : user, fecha1 : fecha1, fecha2 : fecha2}, 
          success : function(result){
+
             if (result) {
                var tab = $('#tabla_tickets tbody')[0];
                var rs = JSON.parse(result);
                    $.each(rs, function(i, elem){
                      var ren = tab.insertRow(tab.rows.length);
+
+               if (rs.error) {
+                  alert(rs.error);
+               return;
+               }
 
                      ren.insertCell().innerHTML = elem.id;
                      ren.insertCell().innerHTML = elem.fecha;
