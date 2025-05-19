@@ -64,11 +64,15 @@ class Tickets_IT extends CI_Controller {
 	$count = $this->Modelo->getTicketsCount();
 	$datos['usuarios'] = $this->privilegios_model->listadoJefes();
         $datos['c_activos'] = $count->activos;
+
+        $datos['c_detenidos'] = $count->detenidos;
+
         $datos['c_solucionados'] = $count->solucionados;
         $datos['c_cerrados'] = $count->cerrados;
         $datos['c_cancelados'] = $count->cancelados;
         $datos['c_revision'] = $count->revision;
         $datos['c_todos'] = $count->todos;
+
 
         $datos['filtro'] = $estatus;
         $datos['tickets'] = $this->Modelo->getTickets($estatus);

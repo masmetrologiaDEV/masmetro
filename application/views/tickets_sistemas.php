@@ -24,6 +24,18 @@
                            </div>
                         </a>
                      </div>
+
+                      <div class="animated flipInY col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <a href="<?= base_url($controlador . "/administrar/detenidos") ?>">
+                           <div <?= $filtro == 'detenidos' ? $current : "" ?> class="tile-stats">
+                              <div class="icon"><i class="fa fa-square-o"></i></div>
+                              <div class="count"><?= $c_detenidos ?></div>
+                              <h3>Detenidos</h3>
+                           </div>
+                        </a>
+                     </div>
+
+                     
                      <div class="animated flipInY col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <a href="<?= base_url($controlador . "/administrar/revision") ?>">
                            <div <?= $filtro == 'revision' ? $current : "" ?> class="tile-stats">
@@ -33,6 +45,7 @@
                            </div>
                         </a>
                      </div>
+                     
                      <div class="animated flipInY col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <a href="<?= base_url($controlador . "/administrar/solucionados") ?>">
                            <div <?= $filtro == 'solucionados' ? $current : "" ?> class="tile-stats">
@@ -86,6 +99,9 @@
                   <div class="clearfix"></div>
                   <form method="POST" action=<?= base_url('tickets_IT/excel') ?> class="form-horizontal form-label-left" novalidate enctype="multipart/form-data">
                      <div class="col-md-12 col-sm-12 col-xs-12">
+                        
+                        <!--  
+
                         <p style="display: inline; margin-right: 10px; margin-left: 10px;">
                            ESTATUS: 
                         </p>
@@ -96,6 +112,8 @@
                            <option value="CERRADO">CERRADOS</option>
                            <option value="CANCELADOS">CANCELADOS</option>
                         </select>
+
+                        -->
                         <p style="display: inline; margin-right: 10px; margin-left: 10px;">
                            USUARIO: 
                         </p>

@@ -13,13 +13,21 @@ class Tickets_IT_model extends CI_Model {
         $this->db->select('TS.id, TS.fecha, ifnull(concat(U.nombre," ",U.paterno),"N/A") as User, TS.tipo, TS.titulo, TS.descripcion, TS.estatus, TS.usuario');
         $this->db->from('tickets_sistemas TS');
         $this->db->join('usuarios U', 'TS.usuario = U.id', 'LEFT');
+
+        //// SOLAMENTE TICKETS "EN CURSO" PARA FILTRO "ACTIVOS"
         if($estatus == 'activos')
         {
-          $this->db->where('TS.estatus', 'ABIERTO');
-          $this->db->or_where('TS.estatus', 'DETENIDO');
+        //  $this->db->where('TS.estatus', 'ABIERTO');
+        //  $this->db->or_where('TS.estatus', 'DETENIDO');
           $this->db->or_where('TS.estatus', 'EN CURSO');
-          $this->db->or_where('TS.estatus', 'EN REVISION');
+        //  $this->db->or_where('TS.estatus', 'EN REVISION');
         }
+        
+        if($estatus == 'detenidos')
+        {
+          $this->db->where('TS.estatus', 'DETENIDO');
+        }
+
         if($estatus == 'revision')
         {
           $this->db->where('TS.estatus', 'EN REVISION');
@@ -87,7 +95,12 @@ class Tickets_IT_model extends CI_Model {
 
     function getTicketsCount(){
       $comando = "count(*) as todos";
-      $comando .=", (SELECT count(*) from tickets_sistemas where (estatus = 'ABIERTO' or estatus = 'DETENIDO' or estatus = 'EN CURSO' or estatus = 'EN REVISION')) as activos";
+    //  $comando .=", (SELECT count(*) from tickets_sistemas where (estatus = 'ABIERTO' or estatus = 'DETENIDO' or estatus = 'EN CURSO' or estatus = 'EN REVISION')) as activos";
+
+      $comando .= ", (SELECT count(*) from tickets_sistemas where (estatus = 'EN CURSO')) as activos";
+      $comando .= ", (SELECT count(*) from tickets_sistemas where (estatus = 'DETENIDO')) as detenidos";
+
+
       $comando .= ", (SELECT count(*) from tickets_sistemas where (estatus = 'EN REVISION')) as revision";
       $comando .= ", (SELECT count(*) from tickets_sistemas where (estatus = 'SOLUCIONADO')) as solucionados";
       $comando .= ", (SELECT count(*) from tickets_sistemas where (estatus = 'CERRADO')) as cerrados";
