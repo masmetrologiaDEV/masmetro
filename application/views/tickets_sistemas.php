@@ -13,7 +13,8 @@
                   <div class="clearfix"></div>
                </div>
                <div class="x_content">
-                  <?php $current = 'style="border: 2px solid";'; ?>
+
+                  <?php  $current = 'style="border: 2px solid";'; ?>
                   <div class="row top_tiles">
                      <div class="animated flipInY col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <a href="<?= base_url($controlador . "/administrar/activos") ?>">
@@ -116,7 +117,7 @@
                         <p style="display: inline; margin-right: 10px; margin-left: 10px;">
                            USUARIO: 
                         </p>
-                        <select style="display: inline; width: 12%; margin-right: 10px;" class="select2_single form-control-xs" name="user">
+                        <select style="display: inline; width: 12%; margin-right: 10px;" class="select2_single form-control-xs" name="user" id="user" onclick="buscar();">
                            <option value=""></option>
                            <?php foreach ($usuarios as $elem) { ?>
                            <option value=<?= $elem->id ?>><?= $elem->user ?></option>
@@ -124,13 +125,14 @@
                         </select>
                         <input id="fecha1" style="display: inline;" type="date" name="fecha1">
                         <input id="fecha2" style="display: inline;" type="date" name="fecha2">
+                        <button class="btn btn-primary btn-xs" onclick="buscar();"><i class="fa fa-search" ></i> Buscar </button>
                         <button type="submit" class="btn btn-success btn-xs"><i class="fa fa-file-excel-o"></i> Exportar </button>
                      </div>
                   </form>
                </div>
                <div class="x_content">
                   <div class="table-responsive">
-                     <table class="table table-striped">
+                     <table id="tabla_tickets" class="table table-striped">
                         <thead>
                            <tr class="headings">
                               <th class="column-title">ID</th>
@@ -256,7 +258,49 @@
      }
    
    }
+
    
+</script>
+<script type="text/javascript">
+    function buscar() {
+      var estatus='<?=$filtro?>';
+      var controlador='<?=$controlador?>';
+      var BTN_CLASS='<?=$BTN_CLASS?>';
+      var user=$('#user').val();
+      var fecha1 =$('#fecha1').val();
+      var fecha2 =$('#fecha2').val();
+      var URL = base_url + "tickets_IT/buscar_tickets";
+      $('#tabla_tickets tbody tr').remove();
+      $.ajax({
+         type : 'POST',
+         url : URL,
+         data : {estatus : estatus, user : user, fecha1 : fecha1, fecha2 : fecha2}, 
+         success : function(result){
+            if (result) {
+               var tab = $('#tabla_tickets tbody')[0];
+               var rs = JSON.parse(result);
+                   $.each(rs, function(i, elem){
+                     var ren = tab.insertRow(tab.rows.length);
+
+                     ren.insertCell().innerHTML = elem.id;
+                     ren.insertCell().innerHTML = elem.fecha;
+                     ren.insertCell().innerHTML = elem.User;
+                     ren.insertCell().innerHTML = elem.tipo;
+                  //   ren.insertCell().innerHTML = "<td><a href='" + base_url +'/'+controlador"/ver/'" + elem.id +"'><button type='button' class='"+ BTN_CLASS+"'>'"elem.estatus"'</button></a></td>";
+                   });               
+            }else{
+               new PNotify({ title: '¡Nada por aquí!', text: 'No se encontraron resultados', type: 'info', styling: 'bootstrap3' });
+            }
+         },
+         error: function(data) {
+            new PNotify({ title: 'ERROR', text: 'Error', type: 'error', styling: 'bootstrap3' });
+            console.log(data);
+         },
+
+      });
+   }
+   
+
 </script>
 <!-- Custom Theme Scripts -->
 <script src=<?= base_url("template/build/js/custom.js"); ?>></script>

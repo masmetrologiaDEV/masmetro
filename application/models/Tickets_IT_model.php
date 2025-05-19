@@ -9,7 +9,7 @@ class Tickets_IT_model extends CI_Model {
         $this->load->database();
     }
 
-    function getTickets($estatus) {
+    function getTickets($estatus, $user=null, $f1 =null, $f2=null) {
         $this->db->select('TS.id, TS.fecha, ifnull(concat(U.nombre," ",U.paterno),"N/A") as User, TS.tipo, TS.titulo, TS.descripcion, TS.estatus, TS.usuario');
         $this->db->from('tickets_sistemas TS');
         $this->db->join('usuarios U', 'TS.usuario = U.id', 'LEFT');
@@ -43,6 +43,9 @@ class Tickets_IT_model extends CI_Model {
         if($estatus == 'cancelados')
         {
           $this->db->where('TS.estatus', 'CANCELADO');
+        }
+        if ($user) {
+            $this->db->where('TS.usuario', $user);
         }
 
         $this->db->order_by('TS.fecha', 'DESC');

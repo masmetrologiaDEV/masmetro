@@ -460,5 +460,21 @@ function excel(){
         header('Content-Transfer-Encoding: binary'); 
         echo $salida;
     }
+    function buscar_tickets(){
+        $estatus=$this->input->post('estatus');
+        $user=$this->input->post('user');
+        $fecha1=$this->input->post('fecha1');
+        $fecha2=$this->input->post('fecha2');
+        
+        if ($user) {
+          $res =  $this->Modelo->getTickets($user);
+        }
+        
+if($res)
+        {
+            echo json_encode($res);
+        }
+
+    }
 
 }
