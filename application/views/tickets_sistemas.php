@@ -286,7 +286,7 @@
                      var BTN_CLASS =null;
 //COMPLETAR switch
                      switch(elem.estatus){
-                        case 0 'ABIERTO'
+                        case  'ABIERTO':
                               BTN_CLASS = 'btn btn-primary';
                               break;
 
