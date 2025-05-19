@@ -465,16 +465,25 @@ function excel(){
         $user=$this->input->post('user');
         $fecha1=$this->input->post('fecha1');
         $fecha2=$this->input->post('fecha2');
-        
+        $f1=null;
+        $f2=null;
 
         if ($user) {
-            if (!empty($fecha1) && !empty($fecha2) && strtotime($fecha1) > strtotime($fecha2)) {
-    echo json_encode(['error' => 'La fecha inicial no puede ser mayor que la final']);
-    return;
-}
 
-          $res =  $this->Modelo->getTickets($estatus, $user, $fecha1, $fecha2);
+
+            /*if (!empty($fecha1) && !empty($fecha2) && strtotime($fecha1) > strtotime($fecha2)) {
+                echo json_encode(['error' => 'La fecha inicial no puede ser mayor que la final']);
+                return;
+            }*/
+            if ($fecha1 && $fecha2) {
+                $f1=$fecha1;
+                $f2=$fecha2;
+            }
+
+          $res = $this->Modelo->getTickets($estatus, $user, $f1, $f2);
+      //     echo var_dump($res);die();
         }
+       
 if($res)
         {
             echo json_encode($res);

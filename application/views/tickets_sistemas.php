@@ -147,8 +147,8 @@
                            <?php
                               if ($tickets) {
                                   $BTN_CLASS = 'btn btn-default';
-                                  foreach ($tickets->result() as $elem) {
-                                      switch ($elem->estatus) {
+                                  foreach ($tickets as $elem) {
+                                      switch ($elem['estatus']) {
                               
                                           case 'ABIERTO':
                                               $BTN_CLASS = 'btn btn-primary';
@@ -180,15 +180,15 @@
                                       }
                                       ?>
                            <tr class="even pointer">
-                              <td><?= substr($controlador, 8) . str_pad($elem->id, 6, "0", STR_PAD_LEFT) ?></td>
+                              <td><?= substr($controlador, 8) . str_pad($elem['id'], 6, "0", STR_PAD_LEFT) ?></td>
                               <td>
-                                 <?php $date = date_create($elem->fecha); ?>
+                                 <?php $date = date_create($elem['fecha']); ?>
                                  <a><?= date_format($date, 'd/m/Y h:i A'); ?></a>
                               </td>
-                              <td><?= $elem->User ?></td>
-                              <td><?= $elem->tipo ?></td>
-                              <td><?= $elem->titulo ?></td>
-                              <td><a href=<?= base_url($controlador . "/ver/" . $elem->id) ?>><button type="button" class=<?= "'" . $BTN_CLASS . "'" ?>><?= $elem->estatus ?></button></a></td>
+                              <td><?= $elem['User'] ?></td>
+                              <td><?= $elem['tipo'] ?></td>
+                              <td><?= $elem['titulo'] ?></td>
+                              <td><a href=<?= base_url($controlador . "/ver/" . $elem['id']) ?>><button type="button" class=<?= "'" . $BTN_CLASS . "'" ?>><?= $elem['estatus'] ?></button></a></td>
                            </tr>
                            <?php
                               }
@@ -282,18 +282,24 @@
                var tab = $('#tabla_tickets tbody')[0];
                var rs = JSON.parse(result);
                    $.each(rs, function(i, elem){
-                     var ren = tab.insertRow(tab.rows.length);
 
-               if (rs.error) {
-                  alert(rs.error);
-               return;
-               }
+                     var BTN_CLASS =null;
+//COMPLETAR switch
+                     switch(elem.estatus){
+                        case 0 'ABIERTO'
+                              BTN_CLASS = 'btn btn-primary';
+                              break;
+
+                     }
+
+                     var ren = tab.insertRow(tab.rows.length);
 
                      ren.insertCell().innerHTML = elem.id;
                      ren.insertCell().innerHTML = elem.fecha;
                      ren.insertCell().innerHTML = elem.User;
                      ren.insertCell().innerHTML = elem.tipo;
-                  //   ren.insertCell().innerHTML = "<td><a href='" + base_url +'/'+controlador"/ver/'" + elem.id +"'><button type='button' class='"+ BTN_CLASS+"'>'"elem.estatus"'</button></a></td>";
+                     ren.insertCell().innerHTML = elem.titulo;
+                     ren.insertCell().innerHTML = "<td><a href='" + base_url + "/" + controlador + "/ver/" + elem.id + "'><button type='button' class='" + BTN_CLASS + "'>" + elem.estatus + "</button></a></td>";
                    });               
             }else{
                new PNotify({ title: '¡Nada por aquí!', text: 'No se encontraron resultados', type: 'info', styling: 'bootstrap3' });

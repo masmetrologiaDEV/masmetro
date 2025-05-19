@@ -57,7 +57,8 @@ class Tickets_IT_model extends CI_Model {
         $this->db->order_by('TS.fecha', 'DESC');
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
-            return $query;
+                return $query->result_array(); // <- Aquí está la diferencia clave
+
         } else {
             return false;
         }
