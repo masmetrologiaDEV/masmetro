@@ -518,34 +518,19 @@ if (!$result || !is_array($result)) {
 
 
     function buscar_tickets(){
-        $estatus=$this->input->post('estatus');
-        $user=$this->input->post('user');
-        $fecha1=$this->input->post('fecha1');
-        $fecha2=$this->input->post('fecha2');
-        $f1=null;
-        $f2=null;
+    $estatus = $this->input->post('estatus');
+    $user = $this->input->post('user');
+    $fecha1 = $this->input->post('fecha1');
+    $fecha2 = $this->input->post('fecha2');
 
-        if ($user) {
+    $f1 = (!empty($fecha1)) ? $fecha1 : null;
+    $f2 = (!empty($fecha2)) ? $fecha2 : null;
 
+    $res = $this->Modelo->getTickets($estatus, $user, $f1, $f2);
 
-            /*if (!empty($fecha1) && !empty($fecha2) && strtotime($fecha1) > strtotime($fecha2)) {
-                echo json_encode(['error' => 'La fecha inicial no puede ser mayor que la final']);
-                return;
-            }*/
-            if ($fecha1 && $fecha2) {
-                $f1=$fecha1;
-                $f2=$fecha2;
-            }
+    echo json_encode($res ?: []);
+}
 
-          $res = $this->Modelo->getTickets($estatus, $user, $f1, $f2);
-      //     echo var_dump($res);die();
-        }
-       
-if($res)
-        {
-            echo json_encode($res);
-        }
-
-    }
+        
 
 }

@@ -119,7 +119,7 @@
                         <p style="display: inline; margin-right: 10px; margin-left: 10px;">
                            USUARIO: 
                         </p>
-                        <select style="display: inline; width: 12%; margin-right: 10px;" class="select2_single form-control-xs" name="user" id="user" onclick="buscar();">
+                        <select style="display: inline; width: 12%; margin-right: 10px;" class="select2_single form-control-xs" name="user" id="user" onchange="buscar();">
                            <option value=""></option>
                            <?php foreach ($usuarios as $elem) { ?>
                            <option value=<?= $elem->id ?>><?= $elem->user ?></option>
@@ -127,11 +127,12 @@
                         </select>   
                         <input id="fecha1" style="display: inline;" type="date" name="fecha1" required>
                         <input id="fecha2" style="display: inline;" type="date" name="fecha2" required>
-                        <button class="btn btn-primary btn-xs" onclick="buscar();"><i class="fa fa-search" ></i> Buscar </button>
+                        <button type="button" class="btn btn-primary btn-xs" onclick="buscar();"><i class="fa fa-search" ></i> Buscar </button>
                         <button type="submit" class="btn btn-success btn-xs"><i class="fa fa-file-excel-o"></i> Exportar </button>
                      </div>
                   </form>
                </div>
+
                <div class="x_content">
                   <div class="table-responsive">
                      <table id="tabla_tickets" class="table table-striped">
@@ -263,6 +264,11 @@
 
    
 </script>
+
+<script>
+  var base_url = '<?= base_url(); ?>';
+</script>
+
 <script type="text/javascript">
     function buscar() {
       var estatus='<?=$filtro?>';
@@ -279,7 +285,7 @@
          url : URL,
          data : {estatus : estatus, user : user, fecha1 : fecha1, fecha2 : fecha2}, 
          success : function(result){
-
+console.log("Datos recibidos:", result);
             if (result) {
                var tab = $('#tabla_tickets tbody')[0];
                var rs = JSON.parse(result);
