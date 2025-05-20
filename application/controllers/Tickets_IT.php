@@ -527,7 +527,7 @@ if (!$result || !is_array($result)) {
     $f2 = (!empty($fecha2)) ? $fecha2 : null;
 
     $res = $this->Modelo->getTickets($estatus, $user, $f1, $f2);
-
+//echo var_dump($res);die();
     echo json_encode($res ?: []);
 }
 

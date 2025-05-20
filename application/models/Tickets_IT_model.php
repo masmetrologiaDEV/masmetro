@@ -10,6 +10,7 @@ class Tickets_IT_model extends CI_Model {
     }
 
     function getTickets($estatus, $user=null, $f1 =null, $f2=null) {
+
         $this->db->select('TS.id, TS.fecha, ifnull(concat(U.nombre," ",U.paterno),"N/A") as User, TS.tipo, TS.titulo, TS.descripcion, TS.estatus, TS.usuario');
         $this->db->from('tickets_sistemas TS');
         $this->db->join('usuarios U', 'TS.usuario = U.id', 'LEFT');
@@ -17,9 +18,11 @@ class Tickets_IT_model extends CI_Model {
         //// SOLAMENTE TICKETS "EN CURSO" PARA FILTRO "ACTIVOS"
         if($estatus == 'activos')
         {
+             $this->db->group_start();
           $this->db->where('TS.estatus', 'ABIERTO');
         //  $this->db->or_where('TS.estatus', 'DETENIDO');
           $this->db->or_where('TS.estatus', 'EN CURSO');
+            $this->db->group_end();
         //  $this->db->or_where('TS.estatus', 'EN REVISION');
         }
         

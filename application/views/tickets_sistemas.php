@@ -132,9 +132,40 @@
                      </div>
                   </form>
                </div>
+<?php
+$count=null;
+switch ($filtro) {
+   case 'activos':
+      $count = $c_activos;
 
+      break;
+   case 'detenidos':
+      $count = $c_detenidos;
+      break;
+   case 'solucionados':
+      $count = $c_solucionados;
+      break;
+   case 'revision':
+      $count = $c_revision;
+      break;
+   case 'cerrados':
+      $count = $c_cerrados;
+      break;
+   case 'cancelados':
+      $count = $c_cancelados;
+      break;
+   case 'todos':
+      $count = $c_todos;
+      break;
+   default:
+      // code...
+      break;
+}
+?>
                <div class="x_content">
                   <div class="table-responsive">
+                     <label id="lblCount" class="pull-right"><?=$count . ($count == 1 ? " Ticket" : " Ticket's");?>
+                     </label>
                      <table id="tabla_tickets" class="table table-striped">
                         <thead>
                            <tr class="headings">
@@ -266,14 +297,13 @@
 </script>
 
 <script>
-  var base_url = '<?= base_url(); ?>';
+  
 </script>
 
 <script type="text/javascript">
     function buscar() {
       var estatus='<?=$filtro?>';
       var controlador='<?=$controlador?>';
-      var BTN_CLASS='<?=$BTN_CLASS?>';
       var user=$('#user').val();
       var fecha1 =$('#fecha1').val();
       var fecha2 =$('#fecha2').val();
@@ -285,10 +315,11 @@
          url : URL,
          data : {estatus : estatus, user : user, fecha1 : fecha1, fecha2 : fecha2}, 
          success : function(result){
-console.log("Datos recibidos:", result);
+//console.log("Datos recibidos:", result);
             if (result) {
                var tab = $('#tabla_tickets tbody')[0];
                var rs = JSON.parse(result);
+               $('#lblCount').text(rs.length + (rs.length == 1 ? " Ticket" : " Ticket's"));
                    $.each(rs, function(i, elem){
 
                      var BTN_CLASS =null;
