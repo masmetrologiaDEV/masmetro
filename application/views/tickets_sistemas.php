@@ -114,6 +114,8 @@
                         </select>
 
                         -->
+                        <input type="hidden" name="estatus" id="estatus" value="TODOS">
+
                         <p style="display: inline; margin-right: 10px; margin-left: 10px;">
                            USUARIO: 
                         </p>
@@ -122,9 +124,9 @@
                            <?php foreach ($usuarios as $elem) { ?>
                            <option value=<?= $elem->id ?>><?= $elem->user ?></option>
                            <?php } ?>
-                        </select>
-                        <input id="fecha1" style="display: inline;" type="date" name="fecha1">
-                        <input id="fecha2" style="display: inline;" type="date" name="fecha2">
+                        </select>   
+                        <input id="fecha1" style="display: inline;" type="date" name="fecha1" required>
+                        <input id="fecha2" style="display: inline;" type="date" name="fecha2" required>
                         <button class="btn btn-primary btn-xs" onclick="buscar();"><i class="fa fa-search" ></i> Buscar </button>
                         <button type="submit" class="btn btn-success btn-xs"><i class="fa fa-file-excel-o"></i> Exportar </button>
                      </div>

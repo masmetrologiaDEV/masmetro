@@ -267,8 +267,12 @@ function excel(){
         $fecha2 = $this->input->post('fecha2');
         $f1=strval($fecha1).' 00:00:00';
         $f2=strval($fecha2).' 23:59:59';
+
         
-        $query = "SELECT t.id as No_Ticket,t.fecha as Fecha_Ticket,t.fecha_cierre, concat(s.nombre, ' ', s.paterno) as solucionador, t.tipo as Tipo,t.titulo as Titulo,t.descripcion as Descripcion,t.estatus as Estatus, tc.fecha as fecha_comentario,tc.comentario as Comentario, concat(u.nombre,' ', u.paterno) as Cerador_Ticket FROM tickets_sistemas t JOIN tickets_sistemas_comentarios tc on t.id=tc.ticket JOIN usuarios u on t.usuario = u.id JOIN usuarios s on t.cierre=s.id where 1=1 ";
+        
+        $query = "SELECT t.id as No_Ticket,t.fecha as Fecha_Ticket,t.fecha_cierre, concat(s.nombre, ' ', s.paterno) as solucionador, t.tipo as Tipo,t.titulo as Titulo,t.descripcion as Descripcion,t.estatus as Estatus, tc.fecha as fecha_comentario,tc.comentario as Comentario, concat(u.nombre,' ', u.paterno) as Cerador_Ticket FROM tickets_sistemas t 
+        LEFT JOIN tickets_sistemas_comentarios tc on t.id=tc.ticket
+        JOIN usuarios u on t.usuario = u.id LEFT JOIN usuarios s on t.cierre=s.id where 1=1 ";
 
         if (!empty($user)) {
             $query .=" and t.usuario = '$user'";
@@ -305,22 +309,29 @@ function excel(){
                                 </tr>
                             </thead>
                             <tbody>';
+
+if (!$result || !is_array($result)) {
+    echo "No se encontraron resultados o hubo un error en la consulta.";
+    return;
+}
+
+
         foreach($result as $row){
             
 
             $salida .='
                         <tr>
-                            <td style="color: $444;  border: 1px solid black; border-collapse: collapse">'.$row->No_Ticket.'</td>
-                            <td style="color: $444;  border: 1px solid black; border-collapse: collapse">'.$row->Fecha_Ticket.'</td>
-                            <td style="color: $444;  border: 1px solid black; border-collapse: collapse">'.$row->Tipo.'</td>
-                            <td style="color: $444;  border: 1px solid black; border-collapse: collapse">'.$row->Titulo.'</td>
-                            <td style="color: $444;  border: 1px solid black; border-collapse: collapse">'.$row->Descripcion.'</td>
-                            <td style="color: $444;  border: 1px solid black; border-collapse: collapse">'.$row->Estatus.'</td>
-                            <td style="color: $444;  border: 1px solid black; border-collapse: collapse">'.$row->fecha_cierre.'</td>
-                            <td style="color: $444;  border: 1px solid black; border-collapse: collapse">'.$row->solucionador.'</td>
-                            <td style="color: $444;  border: 1px solid black; border-collapse: collapse">'.$row->fecha_comentario.'</td>
-                            <td style="color: $444;  border: 1px solid black; border-collapse: collapse">'.$row->Comentario.'</td>
-                            <td style="color: $444;  border: 1px solid black; border-collapse: collapse">'.$row->Cerador_Ticket.'</td>
+                            <td style="color: #444;  border: 1px solid black; border-collapse: collapse">'.$row->No_Ticket.'</td>
+                            <td style="color: #444;  border: 1px solid black; border-collapse: collapse">'.$row->Fecha_Ticket.'</td>
+                            <td style="color: #444;  border: 1px solid black; border-collapse: collapse">'.$row->Tipo.'</td>
+                            <td style="color: #444;  border: 1px solid black; border-collapse: collapse">'.$row->Titulo.'</td>
+                            <td style="color: #444;  border: 1px solid black; border-collapse: collapse">'.$row->Descripcion.'</td>
+                            <td style="color: #444;  border: 1px solid black; border-collapse: collapse">'.$row->Estatus.'</td>
+                            <td style="color: #444;  border: 1px solid black; border-collapse: collapse">'.$row->fecha_cierre.'</td>
+                            <td style="color: #444;  border: 1px solid black; border-collapse: collapse">'.$row->solucionador.'</td>
+                            <td style="color: #444;  border: 1px solid black; border-collapse: collapse">'.$row->fecha_comentario.'</td>
+                            <td style="color: #444;  border: 1px solid black; border-collapse: collapse">'.$row->Comentario.'</td>
+                            <td style="color: #444;  border: 1px solid black; border-collapse: collapse">'.$row->Cerador_Ticket.'</td>
                         </tr>';
              }
 
@@ -337,6 +348,10 @@ function excel(){
         header('Content-Transfer-Encoding: binary'); 
         echo $salida;
     }
+
+
+
+
 
     function reporte_it()
     {
@@ -430,6 +445,9 @@ function excel(){
                                 </tr>
                             </thead>
                             <tbody>';
+
+                           
+
         foreach($result as $row){
             
 
@@ -460,6 +478,10 @@ function excel(){
         header('Content-Transfer-Encoding: binary'); 
         echo $salida;
     }
+
+
+
+
     function buscar_tickets(){
         $estatus=$this->input->post('estatus');
         $user=$this->input->post('user');
