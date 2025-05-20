@@ -262,6 +262,7 @@ class Tickets_IT extends CI_Controller {
 
 function excel(){
         $estatus= $this->input->post('estatus');
+
         $user= $this->input->post('user');
         $fecha1 = $this->input->post('fecha1');
         $fecha2 = $this->input->post('fecha2');
@@ -269,7 +270,7 @@ function excel(){
         $f2=strval($fecha2).' 23:59:59';
 
         
-        
+        ///agregar comentarios y fecha del comentario en un solo renglon
         $query = "SELECT t.id as No_Ticket,t.fecha as Fecha_Ticket,t.fecha_cierre, concat(s.nombre, ' ', s.paterno) as solucionador, t.tipo as Tipo,t.titulo as Titulo,t.descripcion as Descripcion,t.estatus as Estatus, tc.fecha as fecha_comentario,tc.comentario as Comentario, concat(u.nombre,' ', u.paterno) as Cerador_Ticket FROM tickets_sistemas t 
         LEFT JOIN tickets_sistemas_comentarios tc on t.id=tc.ticket
         JOIN usuarios u on t.usuario = u.id LEFT JOIN usuarios s on t.cierre=s.id where 1=1 ";
@@ -277,8 +278,14 @@ function excel(){
         if (!empty($user)) {
             $query .=" and t.usuario = '$user'";
         }
-        if ($estatus!='TODOS') {
-            $query .=" and t.estatus = '$estatus'";
+        //agregar filtros
+        if ($estatus) {
+            if ($estatus=='activos') {
+            $query .=" and t.estatus = 'EN CURSO'";
+            }else if ($estatus=='revision') {
+                $query .=" and t.estatus = 'EN REVISION'";
+            }
+            //$query .=" and t.estatus = '$esta'";
         }
         if (!empty($fecha1) && !empty($fecha2)) {
             $query .=" and t.fecha BETWEEN '".$f1."' AND '".$f2."'";
@@ -286,7 +293,7 @@ function excel(){
 
      
         $query .=" ORDER BY t.id";
-        //echo $query;die();
+        echo $query;die();
         $result= $this->Conexion->consultar($query);
 
          $salida='';

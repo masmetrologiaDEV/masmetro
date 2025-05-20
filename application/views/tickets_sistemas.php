@@ -114,7 +114,7 @@
                         </select>
 
                         -->
-                        <input type="hidden" name="estatus" id="estatus" value="TODOS">
+                        <input type="hidden" name="estatus" id="estatus" value="<?=$filtro?>">
 
                         <p style="display: inline; margin-right: 10px; margin-left: 10px;">
                            USUARIO: 
