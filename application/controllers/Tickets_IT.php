@@ -269,7 +269,6 @@ function excel(){
         $f1=strval($fecha1).' 00:00:00';
         $f2=strval($fecha2).' 23:59:59';
 
-        
         ///agregar comentarios y fecha del comentario en un solo renglon
         $query = " SELECT t.id as No_Ticket, t.fecha as Fecha_Ticket, t.tipo as Tipo, t.titulo as Titulo, t.descripcion as Descripcion, t.estatus as Estatus, t.fecha_cierre,
     CONCAT(s.nombre, ' ', s.paterno) AS solucionador,
@@ -286,13 +285,11 @@ FROM tickets_sistemas t
 
 
 
-        if (!empty($user)) {
-            $query .=" and t.usuario = '$user'";
-        }
+        
         //agregar filtros
         if ($estatus) {
             if ($estatus=='activos') {
-            $query .=" and t.estatus = 'EN CURSO'";
+            $query .=" and (t.estatus = 'EN CURSO' OR t.estatus = 'ABIERTO')";
             }else if ($estatus=='revision') {
                 $query .=" and t.estatus = 'EN REVISION'";
             }
@@ -310,6 +307,9 @@ FROM tickets_sistemas t
             }
 
             //$query .=" and t.estatus = '$esta'";
+        }
+        if (!empty($user)) {
+            $query .=" and t.usuario = '$user'";
         }
         if (!empty($fecha1) && !empty($fecha2)) {
             $query .=" and t.fecha BETWEEN '".$f1."' AND '".$f2."'";
@@ -333,7 +333,6 @@ FROM tickets_sistemas t
                                     <th style="background-color: #F3F1F1; color: black;  border: 1px solid black; border-collapse: collapse">Estatus</th>
                                     <th style="background-color: #F3F1F1; color: black;  border: 1px solid black; border-collapse: collapse">Fecha Cierre</th>
                                     <th style="background-color: #F3F1F1; color: black;  border: 1px solid black; border-collapse: collapse">Solucionado</th>
-                                    <th style="background-color: #F3F1F1; color: black;  border: 1px solid black; border-collapse: collapse">Fecha_Comentario</th>
                                     <th style="background-color: #F3F1F1; color: black;  border: 1px solid black; border-collapse: collapse">Comentario</th>
                                     <th style="background-color: #F3F1F1; color: black;  border: 1px solid black; border-collapse: collapse">Creador Ticket</th>
 

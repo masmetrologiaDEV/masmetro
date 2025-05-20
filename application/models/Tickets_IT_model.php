@@ -17,7 +17,7 @@ class Tickets_IT_model extends CI_Model {
         //// SOLAMENTE TICKETS "EN CURSO" PARA FILTRO "ACTIVOS"
         if($estatus == 'activos')
         {
-        //  $this->db->where('TS.estatus', 'ABIERTO');
+          $this->db->where('TS.estatus', 'ABIERTO');
         //  $this->db->or_where('TS.estatus', 'DETENIDO');
           $this->db->or_where('TS.estatus', 'EN CURSO');
         //  $this->db->or_where('TS.estatus', 'EN REVISION');
@@ -107,7 +107,7 @@ class Tickets_IT_model extends CI_Model {
       $comando = "count(*) as todos";
     //  $comando .=", (SELECT count(*) from tickets_sistemas where (estatus = 'ABIERTO' or estatus = 'DETENIDO' or estatus = 'EN CURSO' or estatus = 'EN REVISION')) as activos";
 
-      $comando .= ", (SELECT count(*) from tickets_sistemas where (estatus = 'EN CURSO')) as activos";
+      $comando .= ", (SELECT count(*) from tickets_sistemas where (estatus = 'ABIERTO' or estatus = 'EN CURSO')) as activos";
       $comando .= ", (SELECT count(*) from tickets_sistemas where (estatus = 'DETENIDO')) as detenidos";
 
 
