@@ -271,9 +271,20 @@ function excel(){
 
         
         ///agregar comentarios y fecha del comentario en un solo renglon
-        $query = "SELECT t.id as No_Ticket,t.fecha as Fecha_Ticket,t.fecha_cierre, concat(s.nombre, ' ', s.paterno) as solucionador, t.tipo as Tipo,t.titulo as Titulo,t.descripcion as Descripcion,t.estatus as Estatus, tc.fecha as fecha_comentario,tc.comentario as Comentario, concat(u.nombre,' ', u.paterno) as Cerador_Ticket FROM tickets_sistemas t 
-        LEFT JOIN tickets_sistemas_comentarios tc on t.id=tc.ticket
-        JOIN usuarios u on t.usuario = u.id LEFT JOIN usuarios s on t.cierre=s.id where 1=1 ";
+        $query = " SELECT t.id as No_Ticket, t.fecha as Fecha_Ticket, t.tipo as Tipo, t.titulo as Titulo, t.descripcion as Descripcion, t.estatus as Estatus, t.fecha_cierre,
+    CONCAT(s.nombre, ' ', s.paterno) AS solucionador,
+    GROUP_CONCAT(
+        CONCAT(DATE_FORMAT(tc.fecha, '%d/%m/%Y %H:%i'), ' - ', tc.comentario)
+        SEPARATOR '\n'
+    ) AS Comentarios,
+    CONCAT(u.nombre, ' ', u.paterno) AS Creador_Ticket
+FROM tickets_sistemas t
+    LEFT JOIN tickets_sistemas_comentarios tc ON t.id = tc.ticket
+    LEFT JOIN usuarios s ON t.cierre = s.id
+    JOIN usuarios u ON t.usuario = u.id
+    WHERE 1=1 ";
+
+
 
         if (!empty($user)) {
             $query .=" and t.usuario = '$user'";
@@ -285,15 +296,28 @@ function excel(){
             }else if ($estatus=='revision') {
                 $query .=" and t.estatus = 'EN REVISION'";
             }
+            else if ($estatus=='solucionados') {
+                $query .=" and t.estatus = 'SOLUCIONADO'";
+            }
+            else if ($estatus=='cerrados') {
+                $query .=" and t.estatus = 'CERRADO'";
+            }
+            else if ($estatus=='cancelados') {
+                $query .=" and t.estatus = 'CANCELADO'";
+            }
+            else if ($estatus=='detenidos') {
+                $query .=" and t.estatus = 'DETENIDO'";
+            }
+
             //$query .=" and t.estatus = '$esta'";
         }
         if (!empty($fecha1) && !empty($fecha2)) {
             $query .=" and t.fecha BETWEEN '".$f1."' AND '".$f2."'";
         }
-
-     
+        
+        $query .= " GROUP BY t.id";
         $query .=" ORDER BY t.id";
-        echo $query;die();
+        //echo $query;die();
         $result= $this->Conexion->consultar($query);
 
          $salida='';
@@ -324,7 +348,11 @@ if (!$result || !is_array($result)) {
 
 
         foreach($result as $row){
-            
+
+            //lineas reemplazadas por nl2br($row->Comentarios)
+
+            // <td style="color: #444;  border: 1px solid black; border-collapse: collapse">'.$row->fecha_comentario.'</td>
+            // <td style="color: #444;  border: 1px solid black; border-collapse: collapse">'.$row->Comentario.'</td>
 
             $salida .='
                         <tr>
@@ -336,9 +364,10 @@ if (!$result || !is_array($result)) {
                             <td style="color: #444;  border: 1px solid black; border-collapse: collapse">'.$row->Estatus.'</td>
                             <td style="color: #444;  border: 1px solid black; border-collapse: collapse">'.$row->fecha_cierre.'</td>
                             <td style="color: #444;  border: 1px solid black; border-collapse: collapse">'.$row->solucionador.'</td>
-                            <td style="color: #444;  border: 1px solid black; border-collapse: collapse">'.$row->fecha_comentario.'</td>
-                            <td style="color: #444;  border: 1px solid black; border-collapse: collapse">'.$row->Comentario.'</td>
-                            <td style="color: #444;  border: 1px solid black; border-collapse: collapse">'.$row->Cerador_Ticket.'</td>
+                            
+                            <td style="color: #444;  border: 1px solid black; border-collapse: collapse">' . nl2br($row->Comentarios) . '</td>
+
+                            <td style="color: #444;  border: 1px solid black; border-collapse: collapse">'.$row->Creador_Ticket.'</td>
                         </tr>';
              }
 
