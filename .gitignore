@@ -5,7 +5,6 @@
 /.env
 *.log
 *.sql
-*.mp4
 *.zip
 *.tar
 .idea/

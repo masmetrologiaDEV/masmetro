@@ -9,63 +9,61 @@ class Tickets_IT_model extends CI_Model {
         $this->load->database();
     }
 
-    function getTickets($estatus, $user=null, $f1 =null, $f2=null) {
+    function getTickets($estatus, $user = null, $f1 = null, $f2 = null) {
+    // Definimos los estatus válidos
+    $estatus_validos = ['activos', 'detenidos', 'revision', 'solucionados', 'cerrados', 'cancelados'];
 
-        $this->db->select('TS.id, TS.fecha, ifnull(concat(U.nombre," ",U.paterno),"N/A") as User, TS.tipo, TS.titulo, TS.descripcion, TS.estatus, TS.usuario');
-        $this->db->from('tickets_sistemas TS');
-        $this->db->join('usuarios U', 'TS.usuario = U.id', 'LEFT');
+    // Validamos el estatus; si no es válido, retornamos arreglo vacío
+    if (!in_array($estatus, $estatus_validos)) {
+        return false;
+    }
 
-        //// SOLAMENTE TICKETS "EN CURSO" PARA FILTRO "ACTIVOS"
-        if($estatus == 'activos')
-        {
-             $this->db->group_start();
-          $this->db->where('TS.estatus', 'ABIERTO');
-        //  $this->db->or_where('TS.estatus', 'DETENIDO');
-          $this->db->or_where('TS.estatus', 'EN CURSO');
-            $this->db->group_end();
-        //  $this->db->or_where('TS.estatus', 'EN REVISION');
-        }
-        
-        if($estatus == 'detenidos')
-        {
-          $this->db->where('TS.estatus', 'DETENIDO');
-        }
+    $this->db->select('TS.id, TS.fecha, ifnull(concat(U.nombre," ",U.paterno),"N/A") as User, TS.tipo, TS.titulo, TS.descripcion, TS.estatus, TS.usuario');
+    $this->db->from('tickets_sistemas TS');
+    $this->db->join('usuarios U', 'TS.usuario = U.id', 'LEFT');
 
-        if($estatus == 'revision')
-        {
-          $this->db->where('TS.estatus', 'EN REVISION');
-        }
-        if($estatus == 'solucionados')
-        {
-          $this->db->where('TS.estatus', 'SOLUCIONADO');
-        }
-        if($estatus == 'cerrados')
-        {
-          $this->db->where('TS.estatus', 'CERRADO');
-        }
-        if($estatus == 'cancelados')
-        {
-          $this->db->where('TS.estatus', 'CANCELADO');
-        }
-        if ($user) {
-            $this->db->where('TS.usuario', $user);
-        }
+    // Aplicamos filtro por estatus
+    if ($estatus == 'activos') {
+        $this->db->group_start();
+        $this->db->where('TS.estatus', 'ABIERTO');
+        // $this->db->or_where('TS.estatus', 'DETENIDO'); // comentado como en original
+        $this->db->or_where('TS.estatus', 'EN CURSO');
+        $this->db->group_end();
+        // $this->db->or_where('TS.estatus', 'EN REVISION'); // comentado como en original
+    } elseif ($estatus == 'detenidos') {
+        $this->db->where('TS.estatus', 'DETENIDO');
+    } elseif ($estatus == 'revision') {
+        $this->db->where('TS.estatus', 'EN REVISION');
+    } elseif ($estatus == 'solucionados') {
+        $this->db->where('TS.estatus', 'SOLUCIONADO');
+    } elseif ($estatus == 'cerrados') {
+        $this->db->where('TS.estatus', 'CERRADO');
+    } elseif ($estatus == 'cancelados') {
+        $this->db->where('TS.estatus', 'CANCELADO');
+    }
 
-        if (!empty($f1) && !empty($f2)) {
+    // Filtrado por usuario si se recibe parámetro
+    if ($user) {
+        $this->db->where('TS.usuario', $user);
+    }
+
+    // Filtrado por fechas si se reciben parámetros válidos
+    if (!empty($f1) && !empty($f2)) {
         $this->db->where('TS.fecha >=', $f1);
         $this->db->where('TS.fecha <=', $f2);
-        }
-        
-
-        $this->db->order_by('TS.fecha', 'DESC');
-        $query = $this->db->get();
-        if ($query->num_rows() > 0) {
-                return $query->result_array(); // <- Aquí está la diferencia clave
-
-        } else {
-            return false;
-        }
     }
+
+    // Ordenar por fecha descendente
+    $this->db->order_by('TS.fecha', 'DESC');
+    $query = $this->db->get();
+
+    if ($query->num_rows() > 0) {
+        return $query->result_array();
+    } else {
+        return false;
+    }
+}
+
 
     function getReporteUsuarios($datos){
         $query = $this->db->query("SELECT T.usuario, concat(U.nombre, ' ', U.paterno) as User ,count(T.usuario) as conteo from tickets_sistemas T inner join usuarios U on U.id = T.usuario where T.fecha between '" . $datos[0] . "' and '" . $datos[1] . "' group by T.usuario order by conteo desc limit 5;");

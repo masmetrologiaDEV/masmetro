@@ -6,6 +6,7 @@ class Tickets_IT extends CI_Controller {
 
     function __construct() {
         parent::__construct();
+        $this->load->library('unit_test');
         $this->load->model('tickets_IT_model', 'Modelo');
         $this->load->model('conexion_model', 'Conexion');
         $this->load->library('correos');
@@ -530,7 +531,4 @@ if (!$result || !is_array($result)) {
 //echo var_dump($res);die();
     echo json_encode($res ?: []);
 }
-
-        
-
 }
