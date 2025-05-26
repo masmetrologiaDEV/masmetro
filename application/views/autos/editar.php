@@ -234,39 +234,13 @@
 
 
 
-<script type="text/javascript">
-  var AUTO = '<?= $auto->id?>';
 
-  function uploadFoto(){
-    var files = document.getElementById("imgAuto").files;
-    var file = files[0];
-    var URL = base_url + 'autos/uploadFoto';
-    var formdata = new FormData();
-    formdata.append("file", file);
-    formdata.append("id", AUTO);
-    var ajax = new XMLHttpRequest();
-    ajax.open("POST", URL);
-    ajax.send(formdata);
-    ajax.onload = function(){
-      window.location.reload();
-    }
-  }  
-  function uploadPoliza(){
-    var files = document.getElementById("poliza").files;
-    var file = files[0];
-    var URL = base_url + 'autos/uploadPoliza';
-    var formdata = new FormData();
-    formdata.append("file", file);
-    formdata.append("id", AUTO);
-    var ajax = new XMLHttpRequest();
-    ajax.open("POST", URL);
-    ajax.send(formdata);
-    ajax.onload = function(){
-      window.location.reload();
-    }
-  }
-
- 
+<script>
+  
+  const AUTO = "<?= $auto->id ?>";
 </script>
+<script src="<?= base_url('application/views/autos/js/editar.js') ?>"></script>
+
+
 </body>
 </html>

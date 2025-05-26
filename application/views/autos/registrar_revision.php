@@ -572,148 +572,20 @@
 <!-- JS Aleks -->
 <script src=<?= base_url("template/js/views/autos/registrar_revision.js"); ?>></script>
 
+
+
+<!--  <script src="<?= base_url('template/vendors/jquery/dist/jquery.min.js') ?>"></script> -->
 <script>
-
-function confirmar()
-{
-  var totalIpts = $('input[type=radio]');
-  var chkIpts = $('input[type=radio]:checked');
-  if(chkIpts.length == (totalIpts.length / 2))
-  {
-      return confirm('¿Desea continuar?');
-  }
-  else {
-      alert('Capture todos los puntos de revisión');
-      return false;
-  }
-}
-
-function comprobarKM()
-{
-  var kmAnt = <?= $kilometraje ?>;
-  var inpKM = document.getElementById('kilometraje').value;
-
-  if(inpKM < kmAnt && inpKM.length != 0)
-  {
-    alert('Kilometraje no puede ser menor a los ' + kmAnt.toLocaleString() + ' KM');
-    document.getElementById('kilometraje').value = '';
-  }
-}
-
-var Maximo = 25;//MAX MB
-var alto=0;
-var ancho=0;
-var tamano=0;
-var tamanoMB=0;
-var tam_MG=0;
-function subirFoto(input) {
-  if (input.files && input.files[0])
-  {
-    var reader = new FileReader();
-    reader.onload = function(e)
-    {
-      var img = new Image();
-      img.src=e.target.result;
-      img.onload = function()
-      {
-        ancho = this.width;
-        alto = this.height;
-      }
-
-      if(tamanoMB <= 3.5)
-      {
-        $("#image").attr('src', img.src);
-        document.getElementById("txtDesc").value = '';
-        document.getElementById("btnUpload").value = '';
-        $("#myModal").modal();
-      }
-      else
-      {
-        alert("Tamaño maximo permitido: 3.5 MB");
-      }
-
-    };
-    tamano = input.files[0].size;
-    tamanoMB = (tamano/(1024))/1024;
-    reader.readAsDataURL(input.files[0]);
-  }
-
-}
-
-function aceptar()
-{
-  var texto = document.getElementById("txtDesc").value;
-
-  if(texto.length > 0)
-  {
-    tam_MG += tamanoMB;
-    document.getElementById("fotoHeader").innerText = "Fotos (" + tam_MG.toFixed(2) +" MB)";
-    if(tam_MG > Maximo)
-    {
-      document.getElementById("btnUpload").disabled = true;
-      document.getElementById("fotoHeader").innerText = "Fotos (MAX " + Maximo + " MB)";
-    }
-
-    var datos = $('#image').attr('src');
-    datos = datos.substr( datos.search(',') + 1);
-
-    $.ajax({
-        type: "POST",
-        url: '<?= base_url('autos/temp_photos') ?>',
-        data: { 'archivo' : datos, 'texto' : texto, 'auto' : '<?= $auto ?>', 'iu' : '<?= $iu ?>'},
-        success: function(result){
-          var ob = JSON.parse(result);
-          $('#tabla').append(
-          '<tr class="even pointer">'+
-            '<td width="20%"><img width="100" src=data:image/jpeg;base64,' + ob.file + '></td>'+
-            '<td><input name="texto[]" type="hidden" value=' + texto + '>' + texto + '</td>'+
-            '<td><button onclick="eliminar(this)" data-idtemp=' + ob.id + ' value=' + tamano + ' class="btn btn-danger">Eliminar</button></td>'+
-          '</tr>');
-        },
-        error: function(data){
-          alert("Error");
-          console.log(data);
-        },
-      });
-  }
-  else {
-    alert("Ingrese Descripción");
-  }
-}
-
-function eliminar(btn)
-{
-    tam_MG -= (btn.value/(1024))/1024;
-    if(tam_MG > Maximo)
-    {
-      document.getElementById("btnUpload").disabled = true;
-      document.getElementById("fotoHeader").innerText = "Fotos (MAX " + Maximo + " MB)";
-    }
-    else
-    {
-      document.getElementById("btnUpload").disabled = false;
-      document.getElementById("fotoHeader").innerText = "Fotos (" + tam_MG.toFixed(2) +" MB)";
-    }
-
-    var i = btn.parentNode.parentNode.rowIndex;
-    var id_temp = btn.dataset.idtemp;
-    alert(id_temp);
-    $.ajax({
-        type: "POST",
-        url: '<?= base_url('autos/delete_temp_photos') ?>',
-        data: { 'id' : id_temp },
-        success: function(result){
-          document.getElementById("tabla").deleteRow(i);
-        },
-        error: function(data){
-          alert("Error");
-          console.log(data);
-        },
-      });
-}
-
+  const kilometrajeActual = <?= $kilometraje ?>;
 </script>
 
+<script>
+  const baseUrl = "<?= base_url() ?>";
+  const autoId = "<?= $auto ?>";
+  const iu = "<?= $iu ?>";
+</script>
+
+<script src="<?= base_url('application/views/autos/js/registrar.js') ?>"></script>
 
 
 </body>

@@ -152,7 +152,8 @@
 <!-- PNotify -->
 <script src=<?= base_url("template/vendors/pnotify/dist/pnotify.js"); ?>></script>
 <script src=<?= base_url("template/vendors/pnotify/dist/pnotify.buttons.js"); ?>></script>
-<script src=<?= base_url("application/views/autos/js/alta_autos.js"); ?>></script>
+
+<!--  <script src=<?= base_url("application/views/autos/js/alta_autos.js"); ?>></script>  -->
 
 <script src=<?= base_url("template/vendors/pnotify/dist/pnotify.nonblock.js"); ?>></script>
 
@@ -160,13 +161,6 @@
 
 <!-- Custom Theme Scripts -->
 <script src=<?= base_url("template/build/js/custom.js"); ?>></script>
-  <script>
 
-    $(function(){
-      load();
-    });
-
-
-        </script>
 </body>
 </html>
