@@ -296,6 +296,7 @@
 <script src=<?= base_url("template/build/js/custom.js"); ?>></script>
 <!-- JS FILE -->
 <script src=<?= base_url("application/views/basculas/js/catalogo_accesorios.js"); ?>></script>
+
 <script>
   $(document).ready(function(){
         load();

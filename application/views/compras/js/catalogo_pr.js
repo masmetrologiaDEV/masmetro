@@ -387,3 +387,54 @@ function procesarPR(btn)
         });
     }
 }
+
+
+
+// Extraer config
+ usuario = window.configCatalogoPR?.usuario || '';
+ privilegios = window.configCatalogoPR?.privilegios || {};
+ est = window.configCatalogoPR?.estatus || '';
+
+$(function () {
+    load();
+    eventos();
+});
+
+function load() {
+    if (est === "TODO") {
+        if (privilegios.editar_qr === "1" || privilegios.liberar_qr === "1") {
+            est = "APROBADO";
+        }
+        if (privilegios.aprobar_pr === "1") {
+            est = "PENDIENTE";
+        }
+        $('#opEstatus').val(est);
+    }
+
+    buscar();
+}
+
+function eventos() {
+    $('#mdlCotizaciones').on('keypress', function (e) {
+        if (e.keyCode === 13) {
+            e.preventDefault();
+            buscarProv();
+        }
+    });
+
+    /* $('#txtBusqueda').on('keypress', function (e) {
+        if (e.keyCode === 13) {
+            buscar();
+        }
+    }); */
+
+    $('.cbPriori').on('ifChanged', function (e) {
+        buscar();
+    });
+}
+
+// Previene enter
+function anular(e) {
+    const tecla = (document.all) ? e.keyCode : e.which;
+    return tecla !== 13;
+}

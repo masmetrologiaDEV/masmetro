@@ -119,7 +119,12 @@
 <script src=<?= base_url("template/vendors/iCheck/icheck.min.js"); ?>></script>
 <!-- Custom Theme Scripts -->
 <script src=<?= base_url("template/build/js/custom.min.js") ?>></script>
+
+
+
 <script>
+
+   //Esto ya esta en el JS pero no falla algo con el controlador//
    var bForm = true;
    
    function confirmar()

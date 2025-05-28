@@ -250,61 +250,7 @@
 <!-- Custom Theme Scripts -->
 <script src=<?= base_url("template/build/js/custom.js"); ?>></script>
 
-<script type="text/javascript">
-
-var wrapper = document.getElementById("signature-pad");
-
-var canvas = wrapper.querySelector("canvas");
-var signaturePad = new SignaturePad(canvas, {
-  backgroundColor: 'rgb(255, 255, 255)'
-});
-
-function resizeCanvas() {
-
-  var ratio =  Math.max(window.devicePixelRatio || 1, 1);
-
-  canvas.width = canvas.offsetWidth * ratio;
-  canvas.height = canvas.offsetHeight * ratio;
-  canvas.getContext("2d").scale(ratio, ratio);
-
-  signaturePad.clear();
-}
-
-window.onresize = resizeCanvas;
-resizeCanvas();
-
-</script>
-<script>
-
-   document.getElementById('form').addEventListener("submit",function(e){
-
-    var ctx = document.getElementById("canvas");
-      var image = ctx.toDataURL(); // data:image/png....
-      document.getElementById('base64').value = image;
-   },false);
-
-</script>
-
-
-<script type="text/javascript">
-function onScanSuccess(qrCodeMessage) {
-    document.getElementById('result').innerHTML ="<input style='text-transform: uppercase;' id='id_equipo' class='form-control col-md-7 col-xs-12' name='id_equipo' placeholder='' required='required' type='text' value='"+qrCodeMessage+"'>";
-
-
-
-     //'<span class="result">'+qrCodeMessage+'</span>';
-}
-
-function onScanError(errorMessage) {
-  //handle scan error
-}
-
-var html5QrcodeScanner = new Html5QrcodeScanner(
-    "reader", { fps: 10, qrbox: 250 });
-html5QrcodeScanner.render(onScanSuccess, onScanError);
-
-</script>
-
+<script src="<?= base_url('application/views/calidad/js/calidad.js') ?>"></script>
 
 
 

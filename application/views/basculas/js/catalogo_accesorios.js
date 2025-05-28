@@ -5,6 +5,10 @@ function load(){
     CargarLoteTemp();
     CargarLoteTempAccesorios();
 }
+
+
+
+
 BASCULA=null;
 function buscar(){
     

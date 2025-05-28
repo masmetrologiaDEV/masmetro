@@ -376,78 +376,26 @@
 <script src=<?= base_url("application/views/compras/js/catalogo_qr.js"); ?>></script>
 
  <script>
-    function anular(e) {
-          tecla = (document.all) ? e.keyCode : e.which;
-          return (tecla != 13);
-     }
-  </script>
-<script>
-    var usuario = '<?= $this->session->id ?>';
-    var RV = '<?= $this->session->privilegios['revisar_qr'] ?>';
-    var C = '<?= $this->session->privilegios['editar_qr'] ?>';
-    var L = '<?= $this->session->privilegios['liberar_qr'] ?>';
-    
-    var I = '<?= $this->session->privilegios['crear_qr_interno'] ?>';
-    var V = '<?= $this->session->privilegios['crear_qr_venta'] ?>';
-
-    $(function(){
-        load();
-        eventos();
-    });
-
-    function eventos(){
-        $( '#mdlCotizaciones' ).on( 'keypress', function( e ) {
-            if( e.keyCode === 13 ) {
-                e.preventDefault();
-                buscarProv();
-            }
-        });
-
-        $( '#txtBusqueda' ).on( 'keypress', function( e ) {
-            if( e.keyCode === 13 ) {
-                buscar();
-            }
-        });
-
-        $('.cbPriori').on( 'ifChanged', function( e ) {
-            buscar();
-        });
-
-        $('#btnAsignarProveedor').on('click', function(){
-            var url = '<?= base_url('compras/ajax_getProveedoresAsignados') ?>';
-            modalAsignarProveedor(this, url);
-        })
+  window.configCodigoQR = {
+    usuario: '<?= $this->session->id ?>',
+    privilegios: {
+      revisar_qr: '<?= $this->session->privilegios['revisar_qr'] ?>',
+      editar_qr: '<?= $this->session->privilegios['editar_qr'] ?>',
+      liberar_qr: '<?= $this->session->privilegios['liberar_qr'] ?>',
+      crear_qr_interno: '<?= $this->session->privilegios['crear_qr_interno'] ?>',
+      crear_qr_venta: '<?= $this->session->privilegios['crear_qr_venta'] ?>'
+    },
+    urls: {
+      proveedoresAsignados: '<?= base_url('compras/ajax_getProveedoresAsignados') ?>',
+      detalleQR: '<?= base_url("compras/ajax_getDetalleQR") ?>',
+      getProveedores: '<?= base_url("empresas/ajax_getProveedores") ?>',
+      setProveedor: '<?= base_url("compras/ajax_setProveedor") ?>'
     }
-
-    function load(){
-        buscar();
-    }
-
-    function verDetalle(btn){
-        var id = btn.dataset.id;
-        var url = '<?= base_url("compras/ajax_getDetalleQR") ?>';
-        getDetalle(id, url);
-    }
-
-    function buscarProv()
-    {
-        var url = '<?= base_url("empresas/ajax_getProveedores") ?>';
-        buscarProveedor(url);
-    }
-
-    function asignarProv(btn)
-    {
-        var url = '<?= base_url("compras/ajax_setProveedor") ?>';
-        asignarProveedor(btn, url);
-    }
-
-    
+  };
 </script>
-<script>
-   function anular(e) {
-          tecla = (document.all) ? e.keyCode : e.which;
-          return (tecla != 13);
-     }
-</script>
+
+<!-- Carga del archivo JS externo -->
+<script src="<?= base_url('application/views/compras/js/catalogo_qr.js') ?>"></script>
+
 </body>
 </html>

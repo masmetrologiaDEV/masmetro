@@ -1074,3 +1074,82 @@ function Items() {
 
 
 
+
+(function () {
+    const config = window.configCodigoQR || {};
+    const usuario = config.usuario || '';
+    window.usuario = config.usuario || '';
+
+    const privilegios = config.privilegios || {};
+    const urls = config.urls || {};
+
+    // Opcional: reasignar si usas estas variables por nombre corto en otras funciones
+    const RV = privilegios.revisar_qr;
+    window.RV = privilegios.revisar_qr;
+
+
+    const C = privilegios.editar_qr;
+    window.C = privilegios.editar_qr;
+
+    const L = privilegios.liberar_qr;
+    window.L = privilegios.liberar_qr;
+
+    const I = privilegios.crear_qr_interno;
+    window.I = privilegios.crear_qr_interno;
+
+    const V = privilegios.crear_qr_venta;
+    window.V = privilegios.crear_qr_venta;
+
+
+    $(function () {
+        load();
+        eventos();
+    });
+
+    function load() {
+        buscar();
+    }
+
+    function eventos() {
+        $('#mdlCotizaciones').on('keypress', function (e) {
+            if (e.keyCode === 13) {
+                e.preventDefault();
+                buscarProv();
+            }
+        });
+
+        $('#txtBusqueda').on('keypress', function (e) {
+            if (e.keyCode === 13) {
+                buscar();
+            }
+        });
+
+        $('.cbPriori').on('ifChanged', function () {
+            buscar();
+        });
+
+        $('#btnAsignarProveedor').on('click', function () {
+            modalAsignarProveedor(this, urls.proveedoresAsignados);
+        });
+    }
+
+    function verDetalle(btn) {
+        const id = btn.dataset.id;
+        getDetalle(id, urls.detalleQR);
+    }
+
+    function buscarProv() {
+        buscarProveedor(urls.getProveedores);
+    }
+
+    function asignarProv(btn) {
+        asignarProveedor(btn, urls.setProveedor);
+    }
+
+    // Función global si se llama desde HTML
+    window.anular = function (e) {
+        const tecla = (document.all) ? e.keyCode : e.which;
+        return tecla !== 13;
+    };
+})();
+

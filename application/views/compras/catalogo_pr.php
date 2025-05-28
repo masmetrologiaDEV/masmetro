@@ -236,59 +236,17 @@
 <!-- JS FILE -->
 <script src=<?= base_url("application/views/compras/js/catalogo_pr.js"); ?>></script>
 <script>
-    var usuario = '<?= $this->session->id ?>';
-
-    $(function(){
-        load();
-        eventos();
-    });
-
-    function load(){
-        var est = '<?= $estatus ?>';
-        if(est == "TODO")
-        {
-            if('<?= $this->session->privilegios['editar_qr'] ?>' == "1" | '<?= $this->session->privilegios['liberar_qr'] ?>' == "1")
-            {
-                est='APROBADO';
-            }
-            if('<?= $this->session->privilegios['aprobar_pr'] ?>' == "1")
-            {
-                est='PENDIENTE';
-            }
-            $('#opEstatus').val(est);
-        }
-
-        buscar();
+  window.configCatalogoPR = {
+    usuario: '<?= $this->session->id ?>',
+    estatus: '<?= $estatus ?>',
+    privilegios: {
+      editar_qr: '<?= $this->session->privilegios['editar_qr'] ?>',
+      liberar_qr: '<?= $this->session->privilegios['liberar_qr'] ?>',
+      aprobar_pr: '<?= $this->session->privilegios['aprobar_pr'] ?>'
     }
-
-    function eventos(){
-        $( '#mdlCotizaciones' ).on( 'keypress', function( e ) {
-            if( e.keyCode === 13 ) {
-                e.preventDefault();
-                buscarProv();
-            }
-        });
-
-        /*$( '#txtBusqueda' ).on( 'keypress', function( e ) {
-            if( e.keyCode === 13 ) {
-                buscar();
-            }
-        });*/
-
-        $('.cbPriori').on( 'ifChanged', function( e ) {
-            buscar();
-        });
-        
-    }
-
-    
-
+  };
 </script>
-<script>
-   function anular(e) {
-          tecla = (document.all) ? e.keyCode : e.which;
-          return (tecla != 13);
-     }
-  </script>
+<script src="<?= base_url('application/views/compras/js/catalogo_pr.js') ?>"></script>
+
 </body>
 </html>

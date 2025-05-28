@@ -15,7 +15,7 @@ class Calidad extends CI_Controller {
        $datos['usuarios'] = $this->privilegios_model->listadoJefes();
         
         $this->load->view('header');
-        $this->load->view('calidad/calidad');
+        $this->load->view('calidad/calidad', $datos);
     }
     function reportes()
     {
