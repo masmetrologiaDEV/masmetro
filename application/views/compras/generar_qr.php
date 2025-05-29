@@ -320,82 +320,13 @@
 <script src=<?= base_url("application/views/compras/js/generar_qr.js"); ?>></script>
 
 <script>
-
-    $(function(){ load(); });
-
-    function aceptar(){
-        var enviar_qr = document.getElementById('enviar_qr');
-   enviar_qr.disabled = true; 
-        var descripcion;
-        var cantidad;
-        var unidad;
-        var clave_unidad;
-        var atributos = {};
-        var tipo= $( "input[name='rbTipo']:checked" ).val();
-        var campo;
-        var valor;
-
-        var cells = $('#tabla tbody tr td');
-        $.each(cells, function(i, elem) {
-                      
-            campo = elem.children[0].dataset.campo;
-            valor = $(elem.children[0]).val();
-
-            if($("#tipoCalibracion").val()== 'N/A'){
-                    alert("Seleccione tipo de calibracion")
-                    exit();
-            }
-            if(!valor && tipo=='PRODUCTO' || !valor && tipo=='SERVICIO')
-            {      
-                alert('Capture todos los campos');
-                exit();
-            }
-            else if(campo == "descripcion")
-            {
-                descripcion = valor;
-            }
-            else if(campo == "cantidad")
-            {
-                cantidad = valor;
-            }
-            else if(campo == "unidad")
-            {
-                clave_unidad = valor;
-                unidad = $(elem.children[0]).find("option:selected").text();
-            }
-            else
-            {
-                atributos[campo] = valor;
-            }
-        });
-
-        var info = {
-            tipo: $( "input[name='rbTipo']:checked" ).val(),
-            subtipo: $( "#opSubtipo").val(),
-            //cliente: client,
-            cantidad: cantidad,
-            unidad: unidad,
-            clave_unidad: clave_unidad,
-            descripcion: descripcion,
-            prioridad: $( "input[name='rbPrioridad']:checked" ).val(),
-            lugar_entrega: $( "#opEntrega" ).val(), 
-            critico: $("#cbCritico").is(":checked") ? 1 : 0,
-            destino: $("input[name='rbDestino']:checked").val(),
-            comentarios: $('#txtComentarios').val(),
-            notificaciones: JSON.stringify(NOTIFICACIONES),
-            especificos: $('#txtRequisitosEspeciales').val(),
-            intervalo: $('#opIntervalo').val(),
-            tipocalibracion: $('#tipoCalibracion').val(),
-
-        };
-        
-        info = JSON.stringify(info);
-        atributos = JSON.stringify(atributos);
-        registrarQR(info, atributos);
-    }
-
-    
+  window.configGenerarQR = {
+    notificaciones: <?= isset($notificaciones) && $notificaciones ? $notificaciones : '[]' ?>
+  };
 </script>
+
+<script src="<?= base_url('application/views/compras/js/generar_qr.js') ?>"></script>
+
 
 </body>
 </html>

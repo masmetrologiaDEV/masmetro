@@ -754,6 +754,84 @@ function uploadFile(){
 
 
 
+  (function () {
+    const config = window.configGenerarQR || {};
+    const NOTIFICACIONES = typeof config.notificaciones === 'string'
+        ? JSON.parse(config.notificaciones)
+        : config.notificaciones;
+
+    window.NOTIFICACIONES = NOTIFICACIONES;
+
+    $(function () {
+        load(); // asumiendo que esta función está definida globalmente o dentro del archivo
+    });
+
+    window.aceptar = function () {
+        const enviar_qr = document.getElementById('enviar_qr');
+        if (enviar_qr) enviar_qr.disabled = true;
+
+        let descripcion, cantidad, unidad, clave_unidad;
+        const atributos = {};
+        const tipo = $("input[name='rbTipo']:checked").val();
+
+        const cells = $('#tabla tbody tr td');
+        let camposCompletos = true;
+
+        $.each(cells, function (i, elem) {
+            const campo = elem.children[0].dataset.campo;
+            const valor = $(elem.children[0]).val();
+
+            if ($("#tipoCalibracion").val() === 'N/A') {
+                alert("Seleccione tipo de calibración");
+                camposCompletos = false;
+                return false;
+            }
+
+            if (!valor && (tipo === 'PRODUCTO' || tipo === 'SERVICIO')) {
+                alert('Capture todos los campos');
+                camposCompletos = false;
+                return false;
+            }
+
+            if (campo === "descripcion") {
+                descripcion = valor;
+            } else if (campo === "cantidad") {
+                cantidad = valor;
+            } else if (campo === "unidad") {
+                clave_unidad = valor;
+                unidad = $(elem.children[0]).find("option:selected").text();
+            } else {
+                atributos[campo] = valor;
+            }
+        });
+
+        if (!camposCompletos) return;
+
+        const info = {
+            tipo: $("input[name='rbTipo']:checked").val(),
+            subtipo: $("#opSubtipo").val(),
+            cantidad: cantidad,
+            unidad: unidad,
+            clave_unidad: clave_unidad,
+            descripcion: descripcion,
+            prioridad: $("input[name='rbPrioridad']:checked").val(),
+            lugar_entrega: $("#opEntrega").val(),
+            critico: $("#cbCritico").is(":checked") ? 1 : 0,
+            destino: $("input[name='rbDestino']:checked").val(),
+            comentarios: $('#txtComentarios').val(),
+            notificaciones: NOTIFICACIONES,
+            especificos: $('#txtRequisitosEspeciales').val(),
+            intervalo: $('#opIntervalo').val(),
+            tipocalibracion: $('#tipoCalibracion').val(),
+        };
+
+        registrarQR(JSON.stringify(info), JSON.stringify(atributos));
+    };
+})();
+
+
+
+
 
 
 

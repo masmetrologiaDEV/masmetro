@@ -60,12 +60,23 @@ class Compras_model extends CI_Model {
     }
 
     function generarQR($info)
-    {
-        $this->db->set('fecha', 'current_timestamp()', FALSE);
-        $this->db->set('maximo_vencimiento', 'current_timestamp()', FALSE);
-        $this->db->insert('requisiciones_cotizacion', $info);
-        return $this->db->insert_id();
+{
+    // Serializar los campos que sean arrays
+    if (is_array($info['notificaciones'])) {
+        $info['notificaciones'] = json_encode($info['notificaciones']);
     }
+
+    if (isset($info['atributos']) && is_array($info['atributos'])) {
+        $info['atributos'] = json_encode($info['atributos']);
+    }
+
+    $this->db->set('fecha', 'current_timestamp()', FALSE);
+    $this->db->set('maximo_vencimiento', 'current_timestamp()', FALSE);
+    $this->db->insert('requisiciones_cotizacion', $info);
+
+    return $this->db->insert_id();
+}
+
 
     function editarQR($info)
     {
