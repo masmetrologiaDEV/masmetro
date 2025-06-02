@@ -36,7 +36,7 @@ class Cafeteria extends CI_Controller {
         $datosCorreo['correo'] = $this->session->correo;
         $datosCorreo['categoria'] = $this->input->post('opCategoria');
         $datosCorreo['fecha_incidencia'] = $this->input->post('fecha_incidencia');
-        $this->correos->comentarios_cafeteria($datosCorreo);
+       // $this->correos->comentarios_cafeteria($datosCorreo);
         redirect(base_url('cafeteria/archivos/') . $last_id);
     }
     function archivos($id_ticket) {
