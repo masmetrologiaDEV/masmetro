@@ -57,6 +57,11 @@
                     </div>
                     <div class="x_content">
 
+              <?php if ($this->session->flashdata('error')): ?>
+  <div class="alert alert-danger">
+    <?= $this->session->flashdata('error') ?>
+  </div>
+<?php endif; ?>
 
 
 

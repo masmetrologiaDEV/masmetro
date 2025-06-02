@@ -50,6 +50,7 @@ class Tickets_AT_model extends CI_Model {
       $comando .= ", (SELECT count(*) from tickets_autos where (estatus = 'SOLUCIONADO')) as solucionados";
       $comando .= ", (SELECT count(*) from tickets_autos where (estatus = 'CERRADO')) as cerrados";
       $comando .= ", (SELECT count(*) from tickets_autos where (estatus = 'CANCELADO')) as cancelados";
+      
 
       $this->db->select($comando);
       $this->db->from('tickets_autos TA');
@@ -182,6 +183,16 @@ class Tickets_AT_model extends CI_Model {
       }
     }
 
+
+public function tickets_solucionados_pendientes($usuario_id) {
+    $this->db->from('tickets_autos');
+    $this->db->where('usuario', $usuario_id);
+    $this->db->where('estatus', 'SOLUCIONADO');
+    $this->db->where('cierre', null); // <- Aquí está la clave: NULL, no 0
+    return $this->db->count_all_results();
 }
 
-?>
+
+}
+
+
