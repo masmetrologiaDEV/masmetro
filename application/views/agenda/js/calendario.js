@@ -1,6 +1,3 @@
-
-
-
 $(function () {
         $("#cbreunion").click(function () {
             if ($(this).is(":checked")) {
@@ -17,9 +14,7 @@ $(function () {
       });
     });
 
-
-
-    var dia;
+var dia;
 var cal;
 var idEvento;
 

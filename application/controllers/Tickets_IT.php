@@ -531,4 +531,36 @@ if (!$result || !is_array($result)) {
 //echo var_dump($res);die();
     echo json_encode($res ?: []);
 }
+public function prueba_buscar_tickets()
+{
+    // Simulamos entradas POST
+    $_POST['estatus'] = 'activos';
+    //$_POST['user'] = '1';
+    /*$_POST['fecha1'] = '2024-01-01';
+    $_POST['fecha2'] = '2024-12-31';*/
+
+    // Obtenemos las variables como en la función original
+    $estatus = $this->input->post('estatus');
+    $user = $this->input->post('user');
+    $fecha1 = $this->input->post('fecha1');
+    $fecha2 = $this->input->post('fecha2');
+
+    $f1 = (!empty($fecha1)) ? $fecha1 : null;
+    $f2 = (!empty($fecha2)) ? $fecha2 : null;
+
+    // Llamamos el modelo directamente
+    $res = $this->Modelo->getTickets($estatus, $user, $f1, $f2);
+    //echo var_dump($res);die();
+
+    // Verificamos que $res sea un array (o el tipo que esperes)
+    echo $this->unit->run(is_array($res), TRUE, 'getTickets devuelve un arreglo');
+
+    // Si hay resultados, verificamos su estructura (opcional)
+    if (!empty($res)) {
+        echo $this->unit->run(isset($res[0]['id']), TRUE, 'El ticket tiene ID');
+        echo $this->unit->run(isset($res[0]['estatus']), TRUE, 'El ticket tiene estatus');
+    } else {
+        echo $this->unit->run(true, true, 'No hay tickets, pero respuesta válida');
+    }
+}
 }
