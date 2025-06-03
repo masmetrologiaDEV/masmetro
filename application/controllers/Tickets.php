@@ -54,7 +54,16 @@ function camaras(){
 
     function ajax_getTicketsSolucionados(){
         $user = $this->input->post('usuario');
-        $res = $this->Conexion->consultar("SELECT count(*) as Conteo FROM tickets_sistemas where usuario = '$user' and estatus = 'SOLUCIONADO'", TRUE);
+        $tipo = $this->input->post('tipo');
+        $tabla= null;
+
+if ($tipo=='IT') {
+    $tabla='tickets_sistemas';
+}else if ($tipo=='AT') {
+     $tabla='tickets_autos';
+}
+
+        $res = $this->Conexion->consultar("SELECT count(*) as Conteo FROM $tabla where usuario = '$user' and estatus = 'SOLUCIONADO'", TRUE);
         if($res)
         {
             echo json_encode($res);   

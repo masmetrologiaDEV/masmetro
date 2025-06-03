@@ -12,23 +12,15 @@ class Tickets_AT extends CI_Controller {
     }
 
 public function generar() {
-    //var_dump($this->session->id);
-    //exit;
+<<<<<<< HEAD
+    
+=======
 
     $this->load->model('autos_model');
     $this->load->model('Tickets_AT_model');
 
-    $usuario_id = $this->session->id;
-if ($usuario_id) {
-    $pendientes = $this->Tickets_AT_model->tickets_solucionados_pendientes($usuario_id);
-    if ($pendientes >= 2) {
-        $this->session->set_flashdata('error', 'Tienes 2 o más tickets solucionados que aún no has cerrado. Por favor ciérralos antes de crear uno nuevo.');
-        redirect(base_url('tickets_AT/nuevo'));
-        return;
-    }
-}
 
-    // var_dump($pendientes); exit;
+>>>>>>> a1710c691099214ee144784fba4bdd348365ceb5
     $auto = $this->input->post('auto');
     if (isset($this->session->POST_auto)) {
         $auto = $this->session->POST_auto;

@@ -184,15 +184,11 @@ class Tickets_AT_model extends CI_Model {
     }
 
 
-public function tickets_solucionados_pendientes($usuario_id) {
-    $this->db->from('tickets_autos');
-    $this->db->where('usuario', $usuario_id);
-    $this->db->where('estatus', 'SOLUCIONADO');
-    $this->db->where('cierre', null); // <- Aquí está la clave: NULL, no 0
-    return $this->db->count_all_results();
-}
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> a1710c691099214ee144784fba4bdd348365ceb5
 }
 
 

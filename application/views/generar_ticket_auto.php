@@ -57,12 +57,6 @@
                     </div>
                     <div class="x_content">
 
-              <?php if ($this->session->flashdata('error')): ?>
-  <div class="alert alert-danger">
-    <?= $this->session->flashdata('error') ?>
-  </div>
-<?php endif; ?>
-
 
 
                         <form method="POST" id="frmTicket" action=<?= base_url('tickets_AT/registrar') ?> class="form-horizontal form-label-left" novalidate>
