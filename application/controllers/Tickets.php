@@ -57,11 +57,18 @@ function camaras(){
         $tipo = $this->input->post('tipo');
         $tabla= null;
 
-        if ($tipo=='IT') {
-            $tabla='tickets_sistemas';
-        }else if ($tipo=='AT') {
-             $tabla='tickets_autos';
-        }
+if ($tipo=='IT') {
+    $tabla='tickets_sistemas';
+}else if ($tipo=='AT') {
+     $tabla='tickets_autos';
+}
+else if ($tipo=='ED') {
+     $tabla='tickets_edificio';
+}
+else if ($tipo=='cafeteria') {
+     $tabla='cafeteria/cafeteria';
+}
+
 
         $res = $this->Conexion->consultar("SELECT count(*) as Conteo FROM $tabla where usuario = '$user' and estatus = 'SOLUCIONADO'", TRUE);
         if($res)
