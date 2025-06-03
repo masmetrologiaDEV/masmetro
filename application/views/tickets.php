@@ -19,15 +19,7 @@
                     <div class="x_content">
                         <div class="row">
                         <?php if($modulo != 'administrar/activos' | $this->session->privilegios['tickets_it_soporte']) { ?>
-<<<<<<< HEAD
-<<<<<<< HEAD
                             <a style="cursor: pointer;" onclick="generarTicketIT('IT')">
-=======
-                            <a style="cursor: pointer;" onclick="generarTicketIT()">
->>>>>>> b60994cdf0736469d41596adaf9b555351539091
-=======
-                            <a style="cursor: pointer;" onclick="generarTicketIT()">
->>>>>>> b60994cdf0736469d41596adaf9b555351539091
                                 <div class="animated flipInY col-md-12 col-sm-12 col-xs-12">
                                     <div class="tile-stats">
                                         <div class="icon"><i class="fa fa-laptop"></i>
@@ -78,7 +70,7 @@
                                 ?>
                             
                                  <?php }?>
-                                 <a style="cursor: pointer;" onclick="generarTicketIT('cafeteria')">
+                            <a style="cursor: pointer;" onclick="generarTicketIT('cafeteria')">     
                                 <div class="animated flipInY col-md-12 col-sm-12 col-xs-12">
                                     <div class="tile-stats">
                                         <div class="icon"><i class="fa fa-cutlery"></i>    
@@ -108,21 +100,11 @@
             </div>
 
             <div class="modal-body">
-<<<<<<< HEAD
-<<<<<<< HEAD
+
                <p id="mensaje">
                    
                 </p> 
-=======
-               <!-- <p>
-                    Tienes 2 o mas Tickets de IT solucionados, es necesario cerrarlos para generar nuevos tickets.
-                </p>--> 
->>>>>>> b60994cdf0736469d41596adaf9b555351539091
-=======
-               <!-- <p>
-                    Tienes 2 o mas Tickets de IT solucionados, es necesario cerrarlos para generar nuevos tickets.
-                </p>--> 
->>>>>>> b60994cdf0736469d41596adaf9b555351539091
+
             </div>
 
             <div class="modal-footer">
@@ -187,7 +169,7 @@ function generarTicketIT(tipo)
             link = base_url+"tickets_ED/" + modulo;
             break;
         case 'cafeteria':
-            link = base_url+"cafeteria/tickets" + modulo;
+            link = base_url+"cafeteria/"+ modulo;
             break;
     }
 
