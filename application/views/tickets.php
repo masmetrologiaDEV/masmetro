@@ -19,7 +19,11 @@
                     <div class="x_content">
                         <div class="row">
                         <?php if($modulo != 'administrar/activos' | $this->session->privilegios['tickets_it_soporte']) { ?>
+<<<<<<< HEAD
                             <a style="cursor: pointer;" onclick="generarTicketIT('IT')">
+=======
+                            <a style="cursor: pointer;" onclick="generarTicketIT()">
+>>>>>>> b60994cdf0736469d41596adaf9b555351539091
                                 <div class="animated flipInY col-md-12 col-sm-12 col-xs-12">
                                     <div class="tile-stats">
                                         <div class="icon"><i class="fa fa-laptop"></i>
@@ -100,9 +104,15 @@
             </div>
 
             <div class="modal-body">
+<<<<<<< HEAD
                <p id="mensaje">
                    
                 </p> 
+=======
+               <!-- <p>
+                    Tienes 2 o mas Tickets de IT solucionados, es necesario cerrarlos para generar nuevos tickets.
+                </p>--> 
+>>>>>>> b60994cdf0736469d41596adaf9b555351539091
             </div>
 
             <div class="modal-footer">
@@ -171,7 +181,7 @@ function generarTicketIT(tipo)
             break;
     }
 
-   
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////   
 
     if(modulo == "generar")
     {
