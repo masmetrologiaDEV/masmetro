@@ -184,20 +184,6 @@ class Tickets_AT_model extends CI_Model {
     }
 
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-public function tickets_solucionados_pendientes($usuario_id) {
-    $this->db->from('tickets_autos');
-    $this->db->where('usuario', $usuario_id);
-    $this->db->where('estatus', 'SOLUCIONADO');
-    return $this->db->count_all_results();
-}
-=======
->>>>>>> b3e5fe015d627153198fcba4a50238f06d47d0f7
-=======
->>>>>>> b3e5fe015d627153198fcba4a50238f06d47d0f7
-
-
 }
 
 
