@@ -12,6 +12,13 @@ class Tickets_AT extends CI_Controller {
     }
 
 public function generar() {
+<<<<<<< HEAD
+<<<<<<< HEAD
+    //var_dump($this->session->id);
+    //exit;
+
+    $this->load->model('autos_model');
+    $this->load->model('Tickets_AT_model');
 
     $usuario_id = $this->session->id;
 if ($usuario_id) {
@@ -22,6 +29,14 @@ if ($usuario_id) {
         return;
     }
 }
+//die();
+    // var_dump($pendientes); exit;
+=======
+    
+>>>>>>> b3e5fe015d627153198fcba4a50238f06d47d0f7
+=======
+    
+>>>>>>> b3e5fe015d627153198fcba4a50238f06d47d0f7
     $auto = $this->input->post('auto');
     if (isset($this->session->POST_auto)) {
         $auto = $this->session->POST_auto;
