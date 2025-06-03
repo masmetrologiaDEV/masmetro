@@ -20,7 +20,7 @@ public function generar() {
     $this->load->model('Tickets_AT_model');
 
 
->>>>>>> a1710c691099214ee144784fba4bdd348365ceb5
+>>>>>>> a1710c691099214ee144784fba4bdd34
     $auto = $this->input->post('auto');
     if (isset($this->session->POST_auto)) {
         $auto = $this->session->POST_auto;

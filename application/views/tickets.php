@@ -48,7 +48,7 @@
                           <div class="row">
                             <?php }
                             if($modulo != 'administrar/activos' | $this->session->privilegios['tickets_ed_soporte']) { ?>
-                            <a href=<?= base_url('tickets_ED/'.$modulo); ?>>
+                            <a style="cursor: pointer;" onclick="generarTicketIT('ED')">
                                 <div class="animated flipInY col-md-12 col-sm-12 col-xs-12">
                                     <div class="tile-stats">
                                         <div class="icon"><i class="fa fa-building"></i>
@@ -68,8 +68,9 @@
                             <?php }
                             if($modulo == 'administrar/activos' && $this->session->privilegios['cafeteria']){ 
                                 ?>
-                                 <a href=<?= base_url('cafeteria/tickets'); ?>>
+                            
                                  <?php }?>
+                                 <a style="cursor: pointer;" onclick="generarTicketIT('cafeteria')">
                                 <div class="animated flipInY col-md-12 col-sm-12 col-xs-12">
                                     <div class="tile-stats">
                                         <div class="icon"><i class="fa fa-cutlery"></i>    
@@ -162,7 +163,12 @@ function generarTicketIT(tipo)
         case 'AT':
             link = base_url+"tickets_AT/" + modulo;
             break;
-
+        case 'ED':
+            link = base_url+"tickets_ED/" + modulo;
+            break;
+        case 'cafeteria':
+            link = base_url+"cafeteria/tickets" + modulo;
+            break;
     }
 
    
@@ -178,12 +184,16 @@ function generarTicketIT(tipo)
                 if(result)
                 {
                     var rs = JSON.parse(result);
-                    if(rs.Conteo > 1)
+                    if(rs.Conteo >= 2)
                     {
                         if (tipo=='IT') {
                             document.getElementById("mensaje").textContent = " Tienes 2 o mas Tickets de IT solucionados, es necesario cerrarlos para generar nuevos tickets.";
                         }else if(tipo=='AT'){
                             document.getElementById("mensaje").textContent = " Tienes 2 o mas Tickets de Autos solucionados, es necesario cerrarlos para generar nuevos tickets.";
+                        }else if(tipo=='ED'){
+                            document.getElementById("mensaje").textContent = " Tienes 2 o mas Tickets de Edificio solucionados, es necesario cerrarlos para generar nuevos tickets.";
+                        }else if(tipo=='cafeteria'){
+                            document.getElementById("mensaje").textContent = " Tienes 2 o mas Tickets de Cafeteria solucionados, es necesario cerrarlos para generar nuevos tickets.";
                         }
                         $('#mdl').modal();
                     }else{
