@@ -131,6 +131,7 @@ class Autos extends CI_Controller {
         $datos['kilometraje'] = $res->kilometraje;
         $this->load->view('header', $head);
         $this->load->view('autos/registrar_revision',$datos);
+        
     }
 
     function ver_checklist($id)
@@ -268,7 +269,7 @@ class Autos extends CI_Controller {
         }
 
         //Save to DB
-        $datos = array('auto' => $AUTO, 'usuario' => $this->session->id, 'kilometraje' => $KILOMETRAJE, 'combustible' => $COMBUSTIBLE, 'placas' => $PLACAS, 'vencimiento_poliza' => $VENCIMIENTO_POLIZA, 'vencimiento_ecologico' => $VENCIMIENTO_ECOLOGICO);
+        $datos = array('auto' => $AUTO, 'usuario' => $this->session->id, 'kilometraje' => $KILOMETRAJE, 'combustible' => $COMBUSTIBLE, 'placas' => $PLACAS, 'vencimiento_poliza' => $VENCIMIENTO_POLIZA, 'vencimiento_ecologico' => $VENCIMIENTO_ECOLOGICO, 'aceiteMotor' => $this->input->post('aceiteMotor'));
         $db_response = $this->Modelo->saveChecklist($datos);
         if($db_response['EXITO'])
         {

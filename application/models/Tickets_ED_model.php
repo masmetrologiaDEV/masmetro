@@ -1,4 +1,4 @@
-<?php
+                    <?php
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
@@ -30,6 +30,14 @@ class Tickets_ED_model extends CI_Model {
         if($estatus == 'cancelados')
         {
           $this->db->where('TE.estatus', 'CANCELADO');
+        }
+        if($estatus == 'detenidos')
+        {
+          $this->db->where('TA.estatus', 'DETENIDO');
+        }
+         if($estatus == 'revision')
+        {
+          $this->db->where('TA.estatus', 'EN REVISION');
         }
 
         $this->db->order_by('TE.fecha', 'DESC');

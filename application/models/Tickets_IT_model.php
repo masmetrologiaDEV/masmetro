@@ -11,7 +11,7 @@ class Tickets_IT_model extends CI_Model {
 
     function getTickets($estatus, $user = null, $f1 = null, $f2 = null) {
     // Definimos los estatus válidos
-    $estatus_validos = ['activos', 'detenidos', 'revision', 'solucionados', 'cerrados', 'cancelados'];
+    $estatus_validos = ['activos', 'detenidos', 'revision', 'solucionados', 'cerrados', 'cancelados', 'todos'];
 
     // Validamos el estatus; si no es válido, retornamos arreglo vacío
     if (!in_array($estatus, $estatus_validos)) {

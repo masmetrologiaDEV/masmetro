@@ -32,6 +32,15 @@ class Tickets_AT_model extends CI_Model {
         {
           $this->db->where('TA.estatus', 'CANCELADO');
         }
+        if($estatus == 'detenidos')
+        {
+          $this->db->where('TA.estatus', 'DETENIDO');
+        }
+         if($estatus == 'revision')
+        {
+          $this->db->where('TA.estatus', 'EN REVISION');
+        }
+
 
         $this->db->order_by('TA.fecha', 'DESC');
         $query = $this->db->get();

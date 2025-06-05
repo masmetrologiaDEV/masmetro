@@ -296,10 +296,6 @@ switch ($filtro) {
    
 </script>
 
-<script>
-  
-</script>
-
 <script type="text/javascript">
     function buscar() {
       var estatus='<?=$filtro?>';
