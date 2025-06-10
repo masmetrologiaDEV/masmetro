@@ -55,7 +55,7 @@ class Tickets_AT_model extends CI_Model {
       $comando = "count(*) as todos";
       $comando .=", (SELECT count(*) from tickets_autos where (estatus = 'ABIERTO' or estatus = 'DETENIDO' or estatus = 'EN CURSO')) as activos";
        $comando .= ", (SELECT count(*) from tickets_autos where estatus = 'DETENIDO') as detenidos";
-      $comando .= ", (SELECT count(*) from tickets_sistemas where (estatus = 'EN REVISION')) as revision";
+      $comando .= ", (SELECT count(*) from tickets_autos where (estatus = 'EN REVISION')) as revision";
       $comando .= ", (SELECT count(*) from tickets_autos where (estatus = 'SOLUCIONADO')) as solucionados";
       $comando .= ", (SELECT count(*) from tickets_autos where (estatus = 'CERRADO')) as cerrados";
       $comando .= ", (SELECT count(*) from tickets_autos where (estatus = 'CANCELADO')) as cancelados";

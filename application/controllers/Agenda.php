@@ -53,7 +53,10 @@ die();*/
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //agregar sala
+
+log_message('debug', 'Valor recibido de reunion: ' . $reunion);
            if ($reunion == 1) {
+            
             $datos = array(
             'usuario' => $this->session->id, 
             'titulo' =>$_POST['titulo'] , 
