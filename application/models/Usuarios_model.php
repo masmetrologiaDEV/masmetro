@@ -55,16 +55,6 @@ class Usuarios_model extends CI_Model {
         } else {
           return false;
         }
-
-        /*
-        $query = "SELECT id, no_empleado, password, concat(nombre,' ',paterno) as User, correo, activo, foto, puesto";
-        $query .= " from usuarios WHERE (id = '" . $user . "' or no_empleado='" . $user . "' or correo='" . $user . "') and password='" . md5($pass) . "'";
-        $res = $this->db->query($query);
-        if ($res->num_rows() > 0) {
-            return $res;
-        } else {
-            return false;
-        }*/
     }
 
     public function getUsuarios() {
