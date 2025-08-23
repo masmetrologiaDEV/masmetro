@@ -4,6 +4,9 @@ function load(){
     getPatrones();
     getAutos();
 }
+function calendarios(){
+     $('#mdlCalendar').modal();
+}
 function buscarTecnicos(){
     getTecnicos();
     var URL = base_url + "ordenes_trabajo/ajax_getUsuarios";

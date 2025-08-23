@@ -1,11 +1,13 @@
 <style>
- #minicalendar {
-    width: 200px;  /* O ajusta a gusto */
-    height: 200px;
+#minicalendar {
+    width: 100%; /* que se ajuste siempre */
+    max-width: 250px; /* límite en desktop */
+    height: auto;
     overflow: hidden;
     border: 1px solid #ccc;
     border-radius: 10px;
     font-size: 12px;
+    margin: 0 auto 15px auto;
 }
 
 #minicalendar .fc-scroller {
@@ -27,26 +29,36 @@
 #minicalendar .fc-row {
     min-height: unset !important;
 }
-    .calendar-row {
+
+/* Layout flexible */
+.calendar-row {
     display: flex;
-    }
-    .calendar-row > [class*="col-"] {
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.calendar-row > [class*="col-"] {
     display: flex;
     flex-direction: column;
-    }
-    .calendar-row .x_panel {
+    flex: 1 1 100%;
+}
+
+.calendar-row .x_panel {
     flex: 1;
     display: flex;
     flex-direction: column;
-    }
-    .lista-scroll {
+}
+
+/* Lista scrollable */
+.lista-scroll {
     margin-top: 10px;
     padding-left: 0;
     list-style: none;
     max-height: 150px;
     overflow-y: auto;
-    }
-    .lista-scroll li {
+}
+
+.lista-scroll li {
     background: #f9f9f9;
     border: 1px solid #ddd;
     padding: 8px 12px;
@@ -56,19 +68,23 @@
     justify-content: space-between;
     align-items: center;
     font-size: 14px;
-    }
-    .lista-scroll li button {
+}
+
+.lista-scroll li button {
     margin-left: 10px;
-    }
-    .contenedor-lista {
+}
+
+.contenedor-lista {
     min-height: 100px;
     position: relative;
-    }
-    .btn-block {
+}
+
+.btn-block {
     width: 140px;
     text-align: left;
-    }
-    .lista-scroll .item-lista {
+}
+
+.lista-scroll .item-lista {
     font-size: 13px;
     background: #f8f9fa;
     padding: 6px 10px;
@@ -78,21 +94,54 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    }
-    .lista-scroll .item-lista button {
+}
+
+.lista-scroll .item-lista button {
     margin-left: 10px;
-    }
-    td {
+}
+
+td {
     vertical-align: top;
     width: 33%;
-    }
-    .fc-agenda-view .fc-time-grid .fc-slats td {
+}
+
+.fc-agenda-view .fc-time-grid .fc-slats td {
     text-align: left;
     padding-left: 8px;
     font-weight: 500;
     color: #444;
+}
+
+/* 📱 Responsive */
+@media (max-width: 768px) {
+    #minicalendar {
+        max-width: 100%;
     }
+
+    .calendar-row {
+        flex-direction: column;
+    }
+
+    .calendar-row > [class*="col-"] {
+        flex: 1 1 100%;
+    }
+
+    #calendar {
+        min-height: 400px;
+    }
+}
+
+@media (min-width: 769px) {
+    .calendar-row > .col-md-2 {
+        flex: 0 0 250px;
+        max-width: 250px;
+    }
+    .calendar-row > .col-md-10 {
+        flex: 1;
+    }
+}
 </style>
+
 <!-- page content -->
 <div class="right_col" role='main'>
     <div class="">
@@ -109,50 +158,79 @@
                             </li>
                         </ul>
                         <div class="clearfix"></div>
+                        <button class="btn btn-primary btn-xs" onclick="calendarios();"><i class="fa fa-calendar"></i> Calendarios
+                        </button>
                     </div>
                 </div>
             </div>
             <div class="row calendar-row">
-                <div class="col-md-2 col-sm-4 col-xs-12 ">
-                    <div class="x_panel">
-                        <div class="x_content">
-                            <div id="minicalendar"></div>
-                            <div class="form-group" style="margin-top: 15px;">
-                                <label for="selectUsuario">Tecnicos</label>
-                                <select id="selectUsuario" class="form-control">
-                                    <option value="TODO">TODO</option>
-                                    <?php foreach ($users as $user): ?>
-                                    <option value="<?= $user->id?>" style="background-color: <?= $user->color; ?>;">
-                                        <?= $user->Nombre; ?>
-                                    </option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
-                            <div class="form-group" style="margin-top: 15px;">
-                                <label for="selectAuto">Autos</label>
-                                <select id="selectAuto" class="form-control">
-                                    <option value="TODO">TODO</option>
-                                    <?php foreach ($autos as $auto): ?>
-                                    <option value="<?= $auto->id?>" >
-                                        <?= $auto->name; ?>
-                                    </option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
-                            <div class="form-group" style="margin-top: 15px;">
-                                <label for="selectPatron">Patrones</label>
-                                <select id="selectPatron" class="form-control">
-                                    <option value="TODO">TODO</option>
-                                    <?php foreach ($patrones as $patron): ?>
-                                    <option value="<?= $patron->id?>">
-                                        <?= $patron->nombre; ?>
-                                    </option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
-                        </div>
+               <div class="col-md-2 col-sm-4 col-xs-12">
+    <div class="x_panel">
+        <div class="x_content">
+            <div id="minicalendar"></div>
+
+            <!-- Accordion Treeview Compacto -->
+            <div class="accordion-tree">
+
+                <div class="accordion-section collapsed">
+                    <div class="accordion-header autos">Autos</div>
+                    <div class="accordion-body">
+                        <?php foreach ($autos as $auto): ?>
+                        <div class="accordion-item"><?= $auto->name; ?></div>
+                        <?php endforeach; ?>
                     </div>
                 </div>
+
+                <div class="accordion-section collapsed">
+                    <div class="accordion-header ejecutivos">Técnicos</div>
+                    <div class="accordion-body">
+                        <?php foreach ($users as $user): ?>
+                        <div class="accordion-item" style="background-color: <?= $user->color; ?>;" id='selectUsuario'>
+                            <?= $user->Nombre; ?>
+                        </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+
+                <div class="accordion-section collapsed">
+                    <div class="accordion-header equipos">Patrones</div>
+                    <div class="accordion-body">
+                        <?php foreach ($patrones as $patron): ?>
+                        <div class="accordion-item"><?= $patron->nombre; ?></div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<style>
+.accordion-tree { font-family: sans-serif; }
+.accordion-section { margin-bottom: 10px; border-radius: 4px; overflow: hidden; }
+.accordion-header { padding: 6px 10px; cursor: pointer; color: white; font-weight: bold; border-radius: 4px; }
+.accordion-body { display: none; padding-left: 10px; margin-top: 9px; }
+.accordion-item { padding: 4px 8px; margin: 2px 0; border-radius: 4px; cursor: pointer; background-color: #f0f0f0; }
+
+.accordion-section.collapsed .accordion-body { display: none; }
+.accordion-section:not(.collapsed) .accordion-body { display: block; }
+
+.autos { background-color: #f7c; }
+.ejecutivos { background-color: #0a7; }
+.equipos { background-color: #6c9; }
+</style>
+
+<script>
+document.querySelectorAll('.accordion-header').forEach(header => {
+    header.addEventListener('click', () => {
+        const section = header.parentElement;
+        section.classList.toggle('collapsed');
+    });
+});
+</script>
+
                 <div class="col-md-10 col-sm-4 col-xs-12 ">
                     <div class="x_panel">
                         <div class="x_content">
@@ -423,6 +501,39 @@
         </div>
     </div>
 </div>
+<div id="mdlCalendar" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Contenido -->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Calendarios</h4>
+      </div>
+      <div class="modal-body">
+        <form id="frmCalendar">
+          <div class="form-group">
+            <label for="calendarName">Calendar Name</label>
+            <input type="text" class="form-control" id="calendarName" placeholder="Enter calendar name">
+          </div>
+          <div class="form-group">
+            <label>Select Color</label><br>
+            <span class="color-circle" data-color="#d9534f" style="background:#d9534f;"></span>
+            <span class="color-circle" data-color="#337ab7" style="background:#337ab7;"></span>
+            <span class="color-circle" data-color="#5cb85c" style="background:#5cb85c;"></span>
+            <span class="color-circle" data-color="#f0ad4e" style="background:#f0ad4e;"></span>
+            <span class="color-circle" data-color="#5bc0de" style="background:#5bc0de;"></span>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" id="btnSave">Save</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+
+  </div>
+</div>
 <!-- jQuery -->
 <script src=<?= base_url("template/vendors/jquery/dist/jquery.min.js"); ?>></script>
 <!-- Bootstrap -->
@@ -508,7 +619,7 @@
                 selectPatron: $('#selectPatron').val(), // Obtenemos el usuario seleccionado
             },
             success: function(data) {
-                console.log("Datos crudos del servidor:", data); // 👈 Agrega esto
+                //console.log("Datos crudos del servidor:", data); // 👈 Agrega esto
                 var eventos = JSON.parse(data);
                 eventos = eventos.map(function(ev) {
                     ev.id = ev.id_evento; // Aseguramos que el campo id esté presente
@@ -664,11 +775,6 @@ $('#selectPatron').on('change', function() {
     $('.date').datetimepicker({
       format: 'hh:mm A'
     });
-    
-    
-    
-    
-    
     
 </script>
 </body>
